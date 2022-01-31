@@ -18,9 +18,6 @@ import "reflect-metadata"
 npm install --save @nestjs/typeorm typeorm mysql2
 ```
 
-[https://docs.nestjs.com/techniques/database](https://docs.nestjs.com/techniques/database)
-[https://docs.nestjs.com/recipes/sql-typeorm](https://docs.nestjs.com/recipes/sql-typeorm)
-
 ### 테이블이 생성된 상태에서 Entity 생성하는 방법
 
 ```
@@ -46,6 +43,8 @@ typeorm-model-generator -h server_ip -d database_name -p server_port -u server_i
 
 [https://typeorm.io/](https://typeorm.io/)
 [https://docs.nestjs.com/modules](https://docs.nestjs.com/modules)
+[https://docs.nestjs.com/techniques/database](https://docs.nestjs.com/techniques/database)
+[https://docs.nestjs.com/recipes/sql-typeorm](https://docs.nestjs.com/recipes/sql-typeorm)
 [https://docs.nestjs.com/fundamentals/custom-providers](https://docs.nestjs.com/fundamentals/custom-providers)
 [https://anywaydevlog.tistory.com/40](https://anywaydevlog.tistory.com/40)
 [https://medium.com/@vahid.vdn/nestjs-providers-usevalue-useclass-usefactory-63a71f94da43](https://medium.com/@vahid.vdn/nestjs-providers-usevalue-useclass-usefactory-63a71f94da43)

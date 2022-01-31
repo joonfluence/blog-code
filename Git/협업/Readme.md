@@ -4,21 +4,12 @@
 
 ### branch & merge
 
-git branch : 브랜치 확인함.
-
-git branch 브랜치이름설정 : 새로운 브랜치를 생성함.
-
-git checkout 브랜치이름 : 생성한 브랜치로 이동함.
-
-git add . : 모든 파일들을 추가함.
-
-git commit -m "commit message" : 커밋, 메세지 작성함.
-
-git push origin 브랜치이름 : origin 저장소의 새로운 브랜치에 푸시함.
-
-git checkout master
-
-git merge 브랜치이름
+- git branch
+  - 브랜치 확인함.
+  - git branch 브랜치이름설정 : 새로운 브랜치를 생성함.
+- git checkout 브랜치이름 : 생성한 브랜치로 이동함.
+- git checkout master
+- git merge 브랜치이름
 
 ### Pull Request
 
@@ -37,4 +28,3 @@ rebase도 병합되는 것은 마찬가지지만, 3 way merge 없이 feature 브
 base를 기준으로 값이 변경된 사람의 내역을 따르면 3 way merge이다. 2 way merge는 서로 다른 경우 base와 상관 없이 conflict가 뜬다.
 
 # 결론
-

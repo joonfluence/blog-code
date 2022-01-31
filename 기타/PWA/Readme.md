@@ -53,6 +53,14 @@
 - External Devices
   - Bluetooth, NFC, USB, HID 등에 연결 가능하다.
 - Idle Detection
+  - 연락처 정보를 통해, 앱 초대가 가능하다.
+- GEOLOCATION
+  - 유저의 현재 위치를 알 수 있다.
+- Device Motion
+  - 유저 핸드폰 각도와 같은 정보들을 알 수 있다.
+- External Devices
+  - Bluetooth, NFC, USB, HID 등에 연결 가능하다.
+- Idle Detection
   - 유저가 설치한 앱을 사용하고 있는지 파악 가능하다.
 - File System
   - 브라우저 제한이 있을 수 있음
