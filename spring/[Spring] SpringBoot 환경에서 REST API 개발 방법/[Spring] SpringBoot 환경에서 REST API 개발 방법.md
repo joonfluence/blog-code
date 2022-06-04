@@ -4,6 +4,41 @@
 
 # 본론
 
+### 초기 데이터 생성
+
+```java
+private Map<String, UserProfile> userMap;
+
+@PostConstruct
+public void init(){
+    userMap = new HashMap<String, UserProfile>();
+    userMap.put("1", new UserProfile("1", "홍길동", "111-1111", "서울시 강남구 대치1동"));
+    userMap.put("2", new UserProfile("2", "홍길동", "111-1112", "서울시 강남구 대치2동"));
+    userMap.put("3", new UserProfile("3", "홍길동", "111-1113", "서울시 강남구 대치3동"));
+}
+```
+
+안녕안녕
+
+### GET : 조회
+
+1. 목록 조회
+
+유저 목록을 조회하려면 어떻게 할까요?
+
+```java
+@GetMapping("/users")
+public List<UserProfile> getUserProfileList(){
+  return new ArrayList<UserProfile>(userMap.values());
+}
+```
+
+### POST : 생성
+
+### PUT : 수정
+
+### DELETE : 삭제
+
 ### 학습할 어노테이션
 
 어노테이션이란? 일종의 함수로, 스프링에 해당 기능을 추가하는 역할을 대신한다.
