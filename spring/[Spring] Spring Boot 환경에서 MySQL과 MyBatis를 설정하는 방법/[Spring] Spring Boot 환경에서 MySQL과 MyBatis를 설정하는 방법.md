@@ -49,7 +49,7 @@ mysql -u root -p
 Spring Boot가 이미 설정되어 있다는 상태를 가정하겠습니다. MySQL 설정을 위한 라이브러리는 어떻게 검색할 수 있을까요? [https://mvnrepository.com/](https://mvnrepository.com/)에서 확인할 수 있습니다.  
 해당 사이트에서 `mysql` 검색 후, 최상단으로 나오는 `MySQL Connector/J`를 찾아줍니다.
 
-[Maven](Maven.png)
+![Maven](Maven.png)
 
 그리고 작성일 기준(2022/06/04)에서 가장 빠른 일자를 선택하고, 사용하는 빌드툴을 눌러줍니다. 저는 gradle을 사용하고 있으므로 gradle 정보를 불러왔습니다.
 
