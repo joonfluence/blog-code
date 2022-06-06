@@ -1,6 +1,6 @@
-690
-
 # 서론
+
+오늘은 자바 프로그래밍을 하면서 유용하게 쓰이는 util 클래스 중 하나인 List에 관해 정리하는 시간을 갖겠습니다.
 
 # 본론
 
@@ -17,12 +17,20 @@ List 인터페이스는 컬렉션 프레임워크를 상속 받습니다. 따라
 - Vector
 - Stack
 
+### List의 특성
+
+List 인터페이스는 중복을 허용하면서 저장순서를 유지하는 특성을 갖습니다.
+
 ### List 구현체 메서드의 종류
 
 1. 생성
 
-- add() - adds an element to a list
-- addAll() - adds all elements of one list to another
+- add() : adds an element to a list
+- addAll() : adds all elements of one list to another
+
+```java
+
+```
 
 2. 조회/순회
 
