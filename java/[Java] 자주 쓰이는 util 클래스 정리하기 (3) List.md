@@ -10,7 +10,7 @@ List 인터페이스는 컬렉션 프레임워크를 상속 받습니다. 따라
 
 ### List의 구현체 종류
 
-또 List는 인터페이스이기 때문에, 이를 구현한 구현체는 여러 개일 수 있습니다. 그러나 동일한 메서드를 갖죠. 아래와 같이 말이죠.
+또 List는 인터페이스이기 때문에, 이를 구현한 구현체는 여러 개일 수 있습니다.
 
 - ArrayList
 - LinkedList
@@ -21,28 +21,112 @@ List 인터페이스는 컬렉션 프레임워크를 상속 받습니다. 따라
 
 List 인터페이스는 중복을 허용하면서 저장순서를 유지하는 특성을 갖습니다.
 
-### List 구현체 메서드의 종류
+### ArrayList
+
+![ArrayList](ArrayList.png)
 
 1. 생성
 
-- add() : adds an element to a list
-- addAll() : adds all elements of one list to another
+- add(int index, E element) : element를 ArrayList에 추가해줍니다. 여기서 index는 생략될 수 있습니다. 성공적으로 값이 삽입 되면, true 값을 반환합니다.
+- addAll(int index, Collection c) : collection을 인자로 받아 추가해줍니다. 여기서 index는 생략될 수 있습니다. 한번에 값을 추가할 때 유용합니다. 성공적으로 값이 삽입 되면, true 값을 반환합니다.
 
 ```java
+import java.util.ArrayList;
 
+public class Main {
+    public static void main(String[] args){
+        ArrayList list1 = new ArrayList(10);
+        list1.add(new Integer(5));
+        list1.add(new Integer(4));
+        list1.add(new Integer(3));
+        list1.add(new Integer(2));
+        list1.add(new Integer(1));
+
+        System.out.println("list1 = " + list1); // list1 = [5, 4, 3, 2, 1]
+
+        ArrayList list2 = new ArrayList();
+        list2.addAll(list1);
+
+        System.out.println("list2 = " + list2); // list2 = [5, 4, 3, 2, 1]
+    }
+}
 ```
 
-2. 조회/순회
+2. 조회/순회/정렬
 
-- get() : helps to randomly access elements from lists
-- iterator() : returns iterator object that can be used to sequentially access elements of lists
-- set() : changes elements of lists
+- get(int index) : 해당 인덱스의 값을 반환합니다.
+- iterator() : 리스트의 요소에 순차적으로 접근할 수 있는 이터레이터 객체를 반환합니다.
+- set(int index, E element) : 해당 인덱스에 값을 넣어줍니다.
 
-3. 삭제
+```java
+public class Main {
+    public static void main(String[] args){
+        ArrayList<String> cities = new ArrayList<>();
+
+        cities.add("Seoul");
+        cities.add("Incheon");
+        cities.add("Busan");
+        System.out.println("Korean cities: " + cities);
+
+        String element = cities.get(1);
+        System.out.println("Cities at index 1: " + element);
+
+        Iterator<String> iterate = cities.iterator();
+        System.out.print("ArrayList: ");
+
+        while(iterate.hasNext()){
+            System.out.print(iterate.next());
+            System.out.print(", ");
+        }
+    }
+}
+```
+
+- sort(Comparator c) : Comparator 객체를 인자로 전달해, 순서를 정렬합니다.
+
+```java
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args){
+        ArrayList list1 = new ArrayList(10);
+        list1.add(new Integer(5));
+        list1.add(new Integer(4));
+        list1.add(new Integer(3));
+        list1.add(new Integer(2));
+        list1.add(new Integer(1));
+
+        System.out.println("list1 = " + list1); // list1 = [5, 4, 3, 2, 1]
+        Collections.sort(list1);
+        System.out.println("list1 = " + list1); // list1 = [1, 2, 3, 4, 5]
+        list1.sort(Comparator.naturalOrder());
+    }
+}
+```
+
+1. 삭제
 
 - remove() : removes an element from the list.
 - removeAll() : removes all the elements from the list.
 - clear() : removes all the elements from the list (more efficient than removeAll()).
+
+```java
+
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args){
+        ArrayList list1 = new ArrayList(10);
+        list1.add(new Integer(5));
+        list1.add(new Integer(4));
+        list1.add(new Integer(3));
+        list1.add(new Integer(2));
+        list1.add(new Integer(1));
+
+
+    }
+}
+```
 
 4. 기타
 
@@ -50,12 +134,9 @@ List 인터페이스는 중복을 허용하면서 저장순서를 유지하는 �
 - toArray() : converts a list into an array.
 - contains() : returns true if a list contains specified element.
 
-### ArrayList
+```java
 
-먼저 ArrayList는 Array와 어떤 차이점이 있을까요?
-
-Array와의 차이점은 Array는 length 제한이 있지만, ArrayList에는 갯수의 제한이 없습니다.
-또한 ArrayList의 내부 구현체를 살펴보면, ArrayList 내부적으로는 Array를 이미 사용하고 있다는 걸 알 수 있습니다.
+```
 
 ## LinkedList
 
