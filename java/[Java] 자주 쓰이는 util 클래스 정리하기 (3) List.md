@@ -104,14 +104,13 @@ public class Main {
 }
 ```
 
-1. 삭제
+3. 삭제
 
 - remove() : removes an element from the list.
 - removeAll() : removes all the elements from the list.
 - clear() : removes all the elements from the list (more efficient than removeAll()).
 
 ```java
-
 import java.util.ArrayList;
 
 public class Main {
@@ -122,8 +121,6 @@ public class Main {
         list1.add(new Integer(3));
         list1.add(new Integer(2));
         list1.add(new Integer(1));
-
-
     }
 }
 ```
