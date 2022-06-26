@@ -1,3 +1,7 @@
+### 환경설정 방법
+
+[Setting up the development environment · React Native](https://reactnative.dev/docs/environment-setup)
+
 ### Xcode 빌드 캐시 삭제
 
 Windows : `Shift+Command+K`
