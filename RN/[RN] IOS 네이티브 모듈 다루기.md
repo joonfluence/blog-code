@@ -4,9 +4,10 @@
 
 # 본론
 
-## 네이티브 모듈 export/import
+먼저, Xcode 상에서 새로운 Object-C 파일을 생성해줍시다. XCode 상, `File -> New -> File`로 접근할 수 있습니다.
 
-먼저, Xcode 상에서 새로운 Object-C 파일을 생성해줍시다. 간단하게, console 상에 값을 출력하는 간단한 기능을 수행할 것입니다. 
+
+![New_File](./New_File.png)
 
 ### Object-C 모듈/메서드 내보내기
 
@@ -36,7 +37,8 @@ RCT_EXPORT_MODULE(RCTCalendarModule);
 @end
 ```
 
-이제, 간단하게 RN에서 받아온 값을 출력하는 코드를 작성하였습니다. 특이한 점은 작성한 메서드와 모듈은 RCT_EXPORT_MODULE, RCT_EXPORT_METHOD로 직접 Export 해줘야 한다는 점입니다.
+이제, 간단하게 RN에서 받아온 값을 출력하는 코드를 작성하였습니다. 
+특이한 점은 작성한 메서드와 모듈은 RCT_EXPORT_MODULE, RCT_EXPORT_METHOD로 직접 Export 해줘야 한다는 점입니다.
 
 ### Javascript 파일에서 불러오기
 
@@ -67,17 +69,6 @@ react-native에서 제공하는 NativeModules에 Object-C 모듈 명을 적어�
 ### Object-C 파일 대신 Swift 파일 띄우기
 
 이번엔 Swift 파일을 띄워보도록 하겠습니다. Object-C 파일을 띄울 때에 비해, 하나의 과정이 추가됩니다. Swift를 사용하여 Xcode 프로젝트를 빌드하려면, 기본 앱 프로젝트에 `Swift 코드`와 `브리징 헤더` 자체가 포함되어야 합니다. 브리징 헤더는 Object-C 파일을 Swift에 노출시키는 역할을 합니다.
-
-```C
-// CalendarManagerBridge.m
-#import <React/RCTBridgeModule.h>
-
-@interface RCT_EXTERN_MODULE(CalendarManager, NSObject)
-
-RCT_EXTERN_METHOD(addEvent:(NSString *)name location:(NSString *)location date:(nonnull NSNumber *)date)
-
-@end
-```
 
 ```C
 // CalendarManager-Bridging-Header.h
@@ -118,7 +109,8 @@ class CalendarManager: NSObject {
 
 브릿지 헤더의 이름은 아래와 같이, X-Code에서도 수정해줘야 합니다. `Target -> Built Settings -> Objective-C Bridging Header`로 접근할 수 있습니다. 
 
-[Swift-Header](./Swift-Header.png)
+
+![Swift-Header](./Swift-Header.png)
 
 저는 RN-Bridge-Manager란 이름으로 설정해줬습니다.
 
