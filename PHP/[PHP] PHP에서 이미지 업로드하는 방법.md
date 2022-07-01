@@ -6,13 +6,21 @@
 
 ```html
 <form method="post" enctype="multipart/form-data" action="upload.php">
-  <input type="file" name="upload_file" onChange="{}" />
+  <input type="file" name="upload_file" onChange="{handleUpload}" />
   <input type="submit" value="업로드" />
 </form>
 ```
 
-```
+```javascript
+  const handleUpload = (e: any) => {
+    const formData = new FormData();
+    formData.append('file', e.target.files[0]);
 
+    yield fetch('http://127.0.0.1:8000/upload.php', {
+    method: 'POST',
+    body: formData,
+    });
+  };
 ```
 
 formData 형태의 값을 백엔드로 전달해줘야 합니다. 이 때 프론트엔드 서버와 백엔드 서버가 분리되었음을 가정하고 진행하겠습니다.
