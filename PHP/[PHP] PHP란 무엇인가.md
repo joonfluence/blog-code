@@ -6,8 +6,11 @@
 
 WAMP(Window Apache MySQL PHP) vs MAMP(Mac Apache MySQL PHP)
 
-대표적인 
+대표적인
 
-### PHP 특징
+### PHP 서버 실행하는 방법
 
-### PHP의 장점
+```json
+cd path/to/your/app
+php -S 127.0.0.1:8000
+```
