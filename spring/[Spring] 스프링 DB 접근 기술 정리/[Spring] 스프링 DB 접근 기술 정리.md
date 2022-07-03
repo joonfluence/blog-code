@@ -29,7 +29,7 @@
 
 ![H2_console](./h2_console.png)
 
-또 브라우저가 실행되면서 자동으로 입력된 IP 주소를 localhost로 변경해줍니다. 그러면 아래와 같이, H2 console 화면이 뜨게 됩니다. JDBC URL을 jdbc:h2:tcp://localhost/~/test로 입력해줍니다.
+또 브라우저가 실행되면서 자동으로 입력된 IP 주소를 localhost로 변경해줍니다. 그러면 아래와 같이, H2 console 화면이 뜨게 됩니다. JDBC URL을 jdbc:h2:tcp://localhost/~/test로 입력해줍니다. 만약 h2 폴더의 경로가 다운로드 폴더 경로라면, 사용자 디렉토리(~)로 변경해줍니다.
 
 ### Tip
 
