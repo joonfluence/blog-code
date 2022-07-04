@@ -14,3 +14,9 @@ WAMP(Window Apache MySQL PHP) vs MAMP(Mac Apache MySQL PHP)
 cd path/to/your/app
 php -S 127.0.0.1:8000
 ```
+### PHP의 장점
+
+
+# MacOS에서 PHP 서버 실행하는 방법
+
+https://velog.io/@timcodejs/PHP-MacOS%EC%97%90%EC%84%9C-PHP-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0
