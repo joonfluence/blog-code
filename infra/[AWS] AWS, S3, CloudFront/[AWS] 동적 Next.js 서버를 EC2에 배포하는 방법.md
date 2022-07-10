@@ -144,4 +144,4 @@ sudo crontab -e
 # 참고한 사이트
 
 (https://github.com/nvm-sh/nvm)[https://github.com/nvm-sh/nvm]
-
+(https://puterism.com/deploy-next-js-with-ec2/)[https://puterism.com/deploy-next-js-with-ec2/]
