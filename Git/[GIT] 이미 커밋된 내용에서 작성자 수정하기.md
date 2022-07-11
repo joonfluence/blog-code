@@ -39,3 +39,12 @@ git commit --amend --author="사용자명 <이메일>"
 6. 3~5 과정 반복
 
 7. 확인
+
+커밋을 푸쉬하여 github에 반영되었는지 확인해줍니다. 
+
+![이미 커밋된 내용에서 작성자 수정하기](./%5BGIT%5D%20%EC%9D%B4%EB%AF%B8%20%EC%BB%A4%EB%B0%8B%EB%90%9C%20%EB%82%B4%EC%9A%A9%EC%97%90%EC%84%9C%20%EC%9E%91%EC%84%B1%EC%9E%90%20%EC%88%98%EC%A0%95%ED%95%98%EA%B8%B0.png)
+
+# 참고한 사이트
+
+[https://jojoldu.tistory.com/120](https://jojoldu.tistory.com/120)
+
