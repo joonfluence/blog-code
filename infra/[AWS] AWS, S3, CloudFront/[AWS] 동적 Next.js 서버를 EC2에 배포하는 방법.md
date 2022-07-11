@@ -143,5 +143,7 @@ sudo crontab -e
 ```
 # 참고한 사이트
 
-(https://github.com/nvm-sh/nvm)[https://github.com/nvm-sh/nvm]
-(https://puterism.com/deploy-next-js-with-ec2/)[https://puterism.com/deploy-next-js-with-ec2/]
+[https://github.com/nvm-sh/nvm](https://github.com/nvm-sh/nvm)
+[https://puterism.com/deploy-next-js-with-ec2/](https://puterism.com/deploy-next-js-with-ec2/)
+[https://may9noy.tistory.com/194](https://may9noy.tistory.com/194)
+[https://dev.to/tikam02/how-to-deploy-node-server-on-apache2-23d7](https://dev.to/tikam02/how-to-deploy-node-server-on-apache2-23d7)
