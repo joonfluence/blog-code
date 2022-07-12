@@ -67,10 +67,11 @@ npm run build
 pm2를 통해서 프로젝트 배포를 시작해줍니다. 
 
 ```shell
-pm2 start yarn -w -i 0 --name "next" -- start
+pm2 start npm -w -i 0 --name "next" -- start
 ```
 
 ### NGINX 리버스 프록시, 도메인, HTTPS 적용하기 
+CPU 코어 수만큼 프로세스가 생성.
 
 - 리버스 프록시를 적용하면, 3000 포트에서 실행되는 서버를 80 포트로 배포하도록 처리할 수 있다. 
 - WAS에서 서버 설정을 할 경우, 설정 방법이 비교적 복잡하기 때문에 NGINX 리버스 프록시를 적용하는 것이 좋다. 

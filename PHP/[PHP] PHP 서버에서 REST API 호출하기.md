@@ -1,3 +1,5 @@
+1. file_get_contents를 사용하는 방식
+
 ```php
 <?php
 
@@ -37,8 +39,15 @@ echo json_encode (json_decode ($result), JSON_PRETTY_PRINT);
 - stream_context_create
 - file_get_contents
 
-역할 파악하기 
+역할 파악하기
+
+2. curl_setopt 방식을 활용한 방식
+
+```php
+curl_setopt(CurlHandle $handle, int $option, mixed $value): bool
+```
 
 # 참고한 사이트
 
 https://docs.microsoft.com/ko-kr/azure/cognitive-services/bing-entities-search/quickstarts/php
+https://qjadud22.tistory.com/37
