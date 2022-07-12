@@ -25,6 +25,12 @@ apache 의 C10K 문제점 해결을 위해 만들어진 Event-Driven 구조의 �
 
 NGINX에서는 커넥션 생성 및 커넥션 제거, 그리고 새로운 요청을 처리하는 것을 이벤트라고 부릅니다. 이 이벤트들은 OS커널이 큐 형식으로 worker 프로세스에게 전달해주고, 이벤트가 큐에 담긴 상태에서 worker 프로세스가 처리할 때까지 비동기 방식으로 대기합니다. 
 
+### Nginx와 Apache 차이 이해하기 
+
+
 # 참고한 사이트
 
 [https://bentist.tistory.com/80](https://bentist.tistory.com/80)
+[https://hyeon9mak.github.io/nginx-vs-apache/](https://hyeon9mak.github.io/nginx-vs-apache/)
+[https://www.whatap.io/ko/blog/43/](https://www.whatap.io/ko/blog/43/)
+[https://stackoverflow.com/questions/10829402/how-to-start-nginx-via-different-portother-than-80](https://stackoverflow.com/questions/10829402/how-to-start-nginx-via-different-portother-than-80)
