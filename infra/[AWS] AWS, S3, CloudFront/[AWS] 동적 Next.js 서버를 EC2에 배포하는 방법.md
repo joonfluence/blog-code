@@ -67,8 +67,10 @@ npm run build
 pm2를 통해서 프로젝트 배포를 시작해줍니다.
 
 ```shell
-pm2 start yarn -w -i 0 --name "next" -- start
+pm2 start npm -w -i 0 --name "next" -- start
 ```
+
+CPU 코어 수만큼 프로세스가 생성.
 
 ### NGINX 리버스 프록시, 도메인, HTTPS 적용하기
 
