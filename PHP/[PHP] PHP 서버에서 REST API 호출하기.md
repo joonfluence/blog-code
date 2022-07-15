@@ -1,3 +1,5 @@
+<!-- @format -->
+
 1. file_get_contents를 사용하는 방식
 
 ```php
@@ -44,7 +46,19 @@ echo json_encode (json_decode ($result), JSON_PRETTY_PRINT);
 2. curl_setopt 방식을 활용한 방식
 
 ```php
-curl_setopt(CurlHandle $handle, int $option, mixed $value): bool
+<?php
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    $result = curl_exec($ch);
+
+    curl_close($ch);
+?>
 ```
 
 # 참고한 사이트
