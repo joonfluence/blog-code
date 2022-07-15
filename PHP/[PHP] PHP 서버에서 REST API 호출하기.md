@@ -59,6 +59,7 @@ echo json_encode (json_decode ($result), JSON_PRETTY_PRINT);
 
     curl_close($ch);
 ?>
+curl_setopt(CurlHandle $handle, int $option, mixed $value): bool
 ```
 
 # 참고한 사이트
