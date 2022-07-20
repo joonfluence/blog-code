@@ -19,6 +19,8 @@
 brew install --cask docker
 ```
 
+cask 옵션을 주게 되면 Docker Desktop on Mac을 설치하게 되고 docker-compose, docker-machine을 같이 설치해줘 한결 편리하게 사용할 수 있다. 설치가 완료되면 데스크탑에서 docker를 실행해보자. 
+
 ### 버전 확인
 
 ```shell
