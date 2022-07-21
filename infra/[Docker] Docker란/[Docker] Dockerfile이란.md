@@ -64,7 +64,7 @@ CMD ["apachectl", "-D", "FOREGROUND"]
 ### 생성한 Dockerfile을 Image로 빌드하는 방법
 
 ```shell
-docker build -t [이미지 이름:이미지 버전] [Dockerfile의 경로]
+docker build -f Dockerfile -t [이미지 이름:이미지 버전] [Dockerfile의 경로]
 ```
 
 ```shell
