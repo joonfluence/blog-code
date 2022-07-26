@@ -1,5 +1,3 @@
-<!-- @format -->
-
 1. file_get_contents를 사용하는 방식
 
 ```php
