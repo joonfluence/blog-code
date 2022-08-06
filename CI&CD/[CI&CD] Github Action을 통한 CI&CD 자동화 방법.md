@@ -30,6 +30,14 @@ main 브랜치로 머지하거나, **커밋을 푸쉬**하거나, 이슈를 누�
 
 각각의 Job은 병렬적으로 실행되는데, 이를 실행하는 요소가 Runner 입니다. Runner는 Virtual Machine 혹은 Docker Container가 해당될 수 있습니다.
 
+### 실제 적용하기
+
+```shell
+.github/workflows/workflow.yml
+```
+
+github의 actions에 들어가서 처리 할 것
+
 ## 참고개념
 
 ### 헬로
