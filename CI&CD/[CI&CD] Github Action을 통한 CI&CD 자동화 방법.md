@@ -1,3 +1,7 @@
+# 본론
+
+## 기본개념
+
 ### Github Action을 위한 CI/CD 자동화 방법
 
 전에는 Jenkins + Buildkite
@@ -8,11 +12,11 @@ CI/CD에서 가장 중요한 것은 `자동화`입니다. 오늘은 Github Actio
 
 1. Events
 
-main 브랜치로 머지하거나, 커밋을 푸쉬하거나, 이슈를 누군가가 여는 등. 깃헙에서 일어날 수 있는 일에 대하여,여러가지 이벤트들을 미리 지정해줄 수 있습니다.
+main 브랜치로 머지하거나, **커밋을 푸쉬**하거나, 이슈를 누군가가 여는 등. 깃헙에서 일어날 수 있는 일에 대하여, 여러가지 이벤트들을 미리 지정해줄 수 있습니다.
 
 2. Workflows
 
-이벤트(예를 들면, 커밋 푸쉬)가 실행될 때, 수행되어야 할 일(Job)들의 목록을 말합니다. Workflow는 하나 혹은 다수의 job으로 구성됩니다.
+이벤트(예를 들면, 커밋 푸쉬)가 실행될 때, 수행되어야 할 일(Job)들의 목록을 말합니다. Workflow는 하나 혹은 다수의 job으로 구성됩니다. Job에는 Unit Test, E2E Test 등이 포함될 수 있습니다.
 
 3. Jobs
 
@@ -25,3 +29,13 @@ main 브랜치로 머지하거나, 커밋을 푸쉬하거나, 이슈를 누군�
 5. Runners
 
 각각의 Job은 병렬적으로 실행되는데, 이를 실행하는 요소가 Runner 입니다. Runner는 Virtual Machine 혹은 Docker Container가 해당될 수 있습니다.
+
+## 참고개념
+
+### 헬로
+
+# 참고사이트
+
+[https://www.youtube.com/watch?v=iLqGzEkusIw&ab_channel=%EB%93%9C%EB%A6%BC%EC%BD%94%EB%94%A9](https://www.youtube.com/watch?v=iLqGzEkusIw&ab_channel=%EB%93%9C%EB%A6%BC%EC%BD%94%EB%94%A9)
+[https://www.youtube.com/watch?v=R8_veQiYBjI&ab_channel=TechWorldwithNana](https://www.youtube.com/watch?v=R8_veQiYBjI&ab_channel=TechWorldwithNana)
+[https://velog.io/@wlrhkd49/Github-Actions%EB%A1%9C-AWS-EC2-%EC%84%9C%EB%B2%84%EC%97%90-%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94](https://velog.io/@wlrhkd49/Github-Actions%EB%A1%9C-AWS-EC2-%EC%84%9C%EB%B2%84%EC%97%90-%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94)
