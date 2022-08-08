@@ -14,7 +14,15 @@
 
 ### 실제 적용해보기 
 
-
+1. CloudFront > Create Distribution 
+2. 분배할 컨텐츠의 방법 선택 (Web) 
+3. Origin Domain Name ex) S3 스토리지 
+4. Default Cache Settings 
+5. Distribution Settings 
+  - Logging on 
+  - Cookie Logging on 
+6. S3 > 객체소유권 > ACL 활성화 > ACL 복원 허용 : 로깅 설정 
+7. cloudFront > OAI(Origin Access Identity) > use an Existing Identity 
 
 # 마무리 
 
@@ -23,3 +31,4 @@
 [https://dev.classmethod.jp/articles/how-fast-is-cloudfront-speed-test/](https://dev.classmethod.jp/articles/how-fast-is-cloudfront-speed-test/)
 [https://real-dongsoo7.tistory.com/86](https://real-dongsoo7.tistory.com/86)
 [https://dev.classmethod.jp/articles/the-s3-bucket-that-you-specific-for-cloudfront-logs-does-not-enable-acl-access-error-resolution-during-log-setup/](https://dev.classmethod.jp/articles/the-s3-bucket-that-you-specific-for-cloudfront-logs-does-not-enable-acl-access-error-resolution-during-log-setup/)
+[https://lemontia.tistory.com/1032](https://lemontia.tistory.com/1032)
