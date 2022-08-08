@@ -1,26 +1,25 @@
-### 서론
+# 서론
 
-CloudFront를 학습하기 위해선 Cache에 대해서 알아보아야 합니다. 그래서 먼저 Cache에 대해서 알아보도록 하겠습니다.
 
-### 본론
 
-캐시를 사용했을 떄의 장점은 네트워크를 통하지 않고도 이미 한 번 다운로드 받은 파일은 빠르게 다운로드 받을 수 있다.
+# 본론
 
-Apache WebServer에서 `Open Config File` - `Open Conf File` 에서 아래와 같이 설정해줍니다.
 
-```
-SetEnv no-gzip 1
-Header set Cache-Control "no-store"
-```
 
-캐시를 최신 상태로
+### 관련 키워드
 
-```
-Header set Cache-Control "max-age=31536000"
-```
+- Content Delivery Network(CDN) : 실제론 데이터센터. 
+- Origin Server : 일반적으로 원본 데이터를 보관하고 있는 스토리지, S3 등을 말함.
+- Edge Server = Edge Location : AWS에서 실질적으로 제공하는 전 세계에 퍼져있는 서버를 말함. 
 
-신선도의 문제가 발생된다.
+### 실제 적용해보기 
 
-성능이 좋으면서도 신선도가 높게 유지하는 것이 관건이다.
+
+
+# 마무리 
 
 # 참고한 사이트
+
+[https://dev.classmethod.jp/articles/how-fast-is-cloudfront-speed-test/](https://dev.classmethod.jp/articles/how-fast-is-cloudfront-speed-test/)
+[https://real-dongsoo7.tistory.com/86](https://real-dongsoo7.tistory.com/86)
+[https://dev.classmethod.jp/articles/the-s3-bucket-that-you-specific-for-cloudfront-logs-does-not-enable-acl-access-error-resolution-during-log-setup/](https://dev.classmethod.jp/articles/the-s3-bucket-that-you-specific-for-cloudfront-logs-does-not-enable-acl-access-error-resolution-during-log-setup/)
