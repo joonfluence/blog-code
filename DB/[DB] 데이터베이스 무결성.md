@@ -26,3 +26,7 @@
 ### 외래 키와 참조 무결성
 
 데이터베이스에서는 참조 무결성을 위해 참조 대상이 존재하지 않는 외래 키를 허용하지 않는다. 즉, 어떠한 외래 키 B가 A를 참조한다면, A는 반드시 데이터베이스에 존재해야 한다. 외래 키는 참조 무결성을 지키기 위해 RESTRICTED와 CASCADE, SET NULL이라는 개념을 외래 키에 적용할 수 있도록 기능을 제공한다.
+
+# 참고한 사이트
+
+[https://untitledtblog.tistory.com/123](https://untitledtblog.tistory.com/123)
