@@ -20,7 +20,6 @@ Dockerfile을 읽을 줄 안다는 것은 해당 이미지가 어떻게 구성�
 ### Dockerfile 작성 및 명령어
 
 Dockerfile을 작성할 땐 실제 파일의 이름을 `Dockerfile`로 해야 합니다. 
-
 ubuntu에 아파치 서버를 설치하는 Dockerfile을 작성해보도록 하겠습니다. 
 
 ```shell
@@ -29,23 +28,10 @@ vi Dockerfile
 ```
 
 ```shell
-# server image는 ubunutu 18.04를 사용
-FROM ubuntu:18.04 
-# Dockerfile 작성자
-MAINTAINER Wimes <yms04089@kookmin.ac.kr> 
-
-# image가 올라갔을 때 수행되는 명령어들
-# -y 옵션을 넣어서 무조건 설치가 가능하도록 한다.
-RUN \
-    apt-get update && \
-    apt-get install -y apache2
-
-# apache가 기본적으로 80포트를 사용하기 때문에 expose를 이용해 apache server로 접근이 가능하도록 한다.
-EXPOSE 80 
-
-# 컨테이너가 생성 된 이후에 내부의 아파치 서버는 항상 실행중인 상태로 만들어준다.
-# apachectl을 foreground(즉, deamon)상태로 돌아가도록 한다.
-CMD ["apachectl", "-D", "FOREGROUND"]
+FROM adoptopenjdk/openjdk11
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
 - FROM : 베이스 이미지
@@ -188,6 +174,8 @@ docker system prune -a
 # Dockerfile 파일이 있는 디렉토리 기준.  마지막의 . 이 상대주소
 docker build -t {이미지명} .
 docker build -f Dockerfile -t [이미지 이름:이미지 버전] [Dockerfile의 경로]
+# M1의 경우
+docker build -f Dockerfile -t [이미지 이름:이미지 버전] [Dockerfile의 경로] --platform linux/amd64
 ```
 
 ⭐️ 도커 컴포즈 실행
@@ -197,6 +185,7 @@ docker build -f Dockerfile -t [이미지 이름:이미지 버전] [Dockerfile의
 docker-compose up
 ```
 
+Docker Compose는 여러개의 도커 어플리케이션 컨테이너들을 정의하고 실행 할 수 있게 도와주는 툴 입니다. YAML 파일을 사용해 어플리케이션의 서비스를 설정하고 하나의 커맨드만으로 여러개의 도커 컨테이너들을 사용 할 수 있습니다.
 백그라운드에서 데몬으로 돌도록 하려면 -d 옵션을 붙입니다.
 
 
@@ -223,7 +212,7 @@ Hello world
 이제 컨테이너 생성 시 도커 볼륨을 통해 host와 도커 컨테이너의 html 폴더를 동기화 하겠습니다.
 
 ```shell
-docker run --name apache-container -d -p 80:80 -v ~/html/:/var/www/html apache-image
+docker run -d -p 80:8080 [이미지명]
 ```
 
 - --name : 컨테이너 이름

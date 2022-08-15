@@ -18,13 +18,23 @@
 
 Host OS를 갖고 있느냐 없느냐를 기준으로 구분 지을 수 있습니다. 컨테이너는 포함하지 않고 Host OS를 공유합니다. 
 
-### 설치 방법
+### Mac 설치 방법
 
 ```shell
 brew install --cask docker
 ```
 
 cask 옵션을 주게 되면 Docker Desktop on Mac을 설치하게 되고 docker-compose, docker-machine을 같이 설치해줘 한결 편리하게 사용할 수 있습니다. 설치가 완료되면 데스크탑에서 docker를 실행해봅시다. 
+
+### Ubuntu 설치 방법
+
+```shell
+sudo apt-get update
+```
+
+```shell
+sudo apt-get install ca-certificates curl gnupg lsb-release
+```
 
 ### 버전 확인
 
@@ -37,3 +47,4 @@ docker --version
 [https://ssyoni.tistory.com/m/22](https://ssyoni.tistory.com/m/22)
 [https://velog.io/@jaryeonge/Docker-Mac%EC%97%90-Homebrew%EB%A1%9C-docker-%EC%84%A4%EC%B9%98](https://velog.io/@jaryeonge/Docker-Mac%EC%97%90-Homebrew%EB%A1%9C-docker-%EC%84%A4%EC%B9%98)
 [https://velog.io/@markany/%EB%8F%84%EC%BB%A4%EC%97%90-%EB%8C%80%ED%95%9C-%EC%96%B4%EB%96%A4-%EA%B2%83-1.-%EB%8F%84%EC%BB%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80](https://velog.io/@markany/%EB%8F%84%EC%BB%A4%EC%97%90-%EB%8C%80%ED%95%9C-%EC%96%B4%EB%96%A4-%EA%B2%83-1.-%EB%8F%84%EC%BB%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80)
+[https://shanepark.tistory.com/237](https://shanepark.tistory.com/237)
