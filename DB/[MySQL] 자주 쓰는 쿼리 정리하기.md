@@ -1,5 +1,11 @@
 # 조회
 
+## 비밀번호 변경
+
+```sql
+set PASSWORD FOR 'root'@'localhost' = PASSWORD("1234");
+```
+
 ## 기본
 
 - 전체 읽기 : SELECT \* from `테이블명` : 테이블의 전체 내용을 선택하여 데이터를 읽어옴.
