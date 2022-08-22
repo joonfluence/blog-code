@@ -166,6 +166,70 @@ US $ 10,000 보상금
 
 # 웹서버 셋팅
 
+1. 아파치(apache)를 설치한다. 
+
+```shell
+sudo apt-get install apache2;
+```
+
+2. 아파치의 SSL 모듈을 활성화 한다.
+
+```shell
+sudo a2enmod ssl
+```
+
+3. 아파치를 재시작 한다.
+
+```shell
+sudo service apache2 restart
+```
+
+4. SSL 인증서 관련된 파일을 위치시킬 디렉토리를 만든다.
+
+```shell
+sudo mkdir /etc/apache2/ssl
+```
+
+5. /etc/apache2/ssl 디렉토리에 인증서 파일들을 위치시킨다.
+
+6. 보안을 위해서 디렉토리와 파일의 권한을 조정한다.
+
+```shell
+sudo chown -R root:root /etc/apache2/ssl;
+```
+
+```shell
+sudo chmod 600 /etc/apache2/ssl/*.*
+```
+
+```shell
+sudo chmod 700 /etc/apache2/ssl;
+```
+
+7. **virtualhost를 설정한다.** 하나의 웹서버에서 여러개의 서비스를 도메인 별로 운영할 수 있도록 돕는 apache의 기능이다. 기본 설정 파일인 /etc/apache2/sites-available/default-ssl을 수정한다. 아래에서는 편집기로 nano를 사용하고 있다. 
+
+```shell
+sudo nano /etc/apache2/sites-available/default-ssl
+```
+
+8. 파일의 내용에서 지시자의 값을 아래와 같이 변경한다. 예제 파일은 http://www.startssl.com/?app=21를 참고한다.
+
+```shell
+SSLCertificateFile    /etc/apache2/ssl/ssl.crt
+SSLCertificateKeyFile /etc/apache2/ssl/ssl.key
+SSLCertificateChainFile /etc/apache2/ssl/sub.class1.server.ca.pem
+SSLCACertificateFile /etc/apache2/ssl/ca.pem
+```
+
+9. 버추얼 호스트 default-ssl을 활성화된 서비스로 등록한다.
+
+```shell
+sudo a2ensite default-ssl
+```
+
+10. apache를 재시작한다. 
+11. https 프로토콜로 접속한다. 
+
 # 참고한 사이트
 
 [https://universitytomorrow.com/22](https://universitytomorrow.com/22)
