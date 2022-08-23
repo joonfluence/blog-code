@@ -1,6 +1,7 @@
+# 본론
 ### 환경설정 방법
 
-[Setting up the development environment · React Native](https://reactnative.dev/docs/environment-setup)
+[Setting up the development environment · React Native - 링크](https://reactnative.dev/docs/environment-setup)
 
 ### Xcode 빌드 캐시 삭제
 
@@ -9,7 +10,7 @@ Mac : `Option+Shift+Command+K`
 
 ### 완전 삭제
 
-```jsx
+```shell
 ~/Library/Developer/Xcode/DerivedData
 ```
 
@@ -17,13 +18,19 @@ Mac : `Option+Shift+Command+K`
 
 ### Pods Dependency Error
 
-```
+```shell
 rm -rf node_modules && yarn install && cd ios && rm -rf Pods && pod install && cd ..
+```
+
+### React Dependency Error
+
+```shell
+npm install --legacy-peer-deps
 ```
 
 ### Pods Install Error
 
-```
+```shell
 sudo arch -x86_64 gem install ffi
 arch -x86_64 pod install
 arch -x86_64 pod install --repo-update
@@ -33,8 +40,16 @@ arch -x86_64 pod install --repo-update
 
 Run the following command to find the id for the process that is listening on port 8081:
 
-`sudo lsof -i :8081` 
+```shell
+sudo lsof -i :8081
+``` 
 
-Then run the following to terminate the process:
+Then run the following to terminate the process. 
 
-`kill -9 <PID>`
+```shell
+kill -9 <PID>
+```
+
+# 참고한 사이트
+
+[https://www.korecmblog.com/ERESOLVE-unable-to-resolve-dependency-tree/](https://www.korecmblog.com/ERESOLVE-unable-to-resolve-dependency-tree/)
