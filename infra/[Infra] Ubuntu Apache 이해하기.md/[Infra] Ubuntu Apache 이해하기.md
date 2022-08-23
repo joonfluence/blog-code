@@ -6,7 +6,7 @@
 
 ### 상태확인
 
-```
+```shell
 systemctl status apache2.service
 ```
 
@@ -15,27 +15,23 @@ ProxyPreserveHost :::
 
 ### 재실행
 
-```
+```shell
 service apache2 restart
 ```
 
 ### 네트워크 테스트 방법
 
-```
+```shell
 PING 192.1.6.1
 ```
 
 ### 실행중인 포트확인
 
-```
+```shell
 netstat -nlpt
 ```
 
-<<<<<<< HEAD
-
 # 본론
-
-=======
 
 ## 리버스 프록시
 
@@ -93,14 +89,16 @@ netstat -nlpt
 
 - VirtualHost
 
-web Server는 Main Host외의 별도의 가상 Host를 사용하여 1개의 서버에서 여러개의 웹서버를 운영할 수 있습니다.
+Web Server는 Main Host외의 별도의 **가상 Host**를 사용하여 _1개의 서버에서 여러 개의 웹서버를 운영할 수 있습니다._
 WAS를 연동할 때는 DocumentRoot를 사용하는 대신 RerverseProxy를 사용합니다.
 
 - 도메인 세팅
-  ServerName은 서비스할 도메인이며 ServerAlias는 서버의 별칭이다.
+
+ServerName은 서비스할 도메인이며 ServerAlias는 서버의 별칭이다.
 
 - 로그 세팅
-  ErrorLog는 에러로그의 경로이며, CustomLog는 접속 로그의 경로이다.
+
+ErrorLog는 에러로그의 경로이며, CustomLog는 접속 로그의 경로이다.
 
 - 프록시 세팅
 
@@ -113,8 +111,6 @@ deny조건을 먼저 확인한 후 allow조건을 확인하며, 모든 호스트
 127.0.0.1:8080/posts/1로 변환시켜주는 기능이다.
 `proxypassReverse /<이곳에 경로를 설정해도 된다 ex)blog> http://127.0.0.1:8080/`. 위의것과 기능은 동일하지만, 내부에서 리다이렉트가 일어났을시 생성되는 URL의 도메인이 127.0.0.1:8080/이
 되버리기 때문에 이를 다시 www.domain.com/으로 변환해주는 기능이다.
-
-> > > > > > > f28701cff45c668eef0f9bc58ee3fb604b6316da
 
 # 참고한 사이트
 

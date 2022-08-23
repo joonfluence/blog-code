@@ -6,7 +6,7 @@
 
 WAMP(Window Apache MySQL PHP) vs MAMP(Mac Apache MySQL PHP)
 
-대표적인
+WAMP packaged by Bitnami provides a complete, fully-integrated and ready to run WAMP development environment. In addition to PHP, MySQL and Apache, it includes FastCGI, OpenSSL, phpMyAdmin, ModSecurity, SQLite, ImageMagick, xDebug, Xcache, OpenLDAP, ModSecurity, Memcache, OAuth, PEAR, PECL, APC, GD, cURL and other components and the following frameworks:Zend Framework, Symfony, CodeIgniter, CakePHP, Smarty, Laravel.
 
 ### PHP 서버 실행하는 방법
 
@@ -14,8 +14,8 @@ WAMP(Window Apache MySQL PHP) vs MAMP(Mac Apache MySQL PHP)
 cd path/to/your/app
 php -S 127.0.0.1:8000
 ```
-### PHP의 장점
 
+### PHP의 장점
 
 # MacOS에서 PHP 서버 실행하는 방법
 
