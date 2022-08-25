@@ -53,3 +53,4 @@ public class HelloWorld extends HttpServlet {
 [CGI 그리고 Servlet과 JSP와의 관계](https://aahc.tistory.com/14)
 [CGI와 웹서버](https://m.blog.naver.com/PostView.nhn?blogId=goddlaek&logNo=220901890910&proxyReferer=https:%2F%2Fwww.google.com%2F)
 [Tomcat과 JSP](http://www.beginwithjava.com/servlet-jsp/web-application-overview/hello-world-servlet-eclipse.html)
+[아파치 투토리얼: CGI를 사용한 동적 페이지 생성](https://httpd.apache.org/docs/2.4/ko/howto/cgi.html)
