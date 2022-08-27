@@ -1,17 +1,35 @@
 # 본론
 
-### 설치
+### 패키지 설치
 
 ```groovy
 dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.boot:spring-boot-starter-security'
-        implementation 'com.auth0:java-jwt:3.18.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'com.auth0:java-jwt:3.18.1'
 }
 ```
 
-시큐리티 설정을 해준다. 일단 configure()는 기본만..
-@EnableWebSecurity로 시큐리티 사용을 설정하면, 자동으로 스프링 시큐리티에서 몇 가지 URL을 생성한다.
+### FilterChain
+
+먼저 Spring Security를 알기 위해선, 서블릿을 알아야 한다. `서블릿(Servelet)`이란 자바로 구현된 웹 서버에 대한 구현 클래스를 말한하며, HttpServletRequest와 HttpServletResponse를 파라미터로 갖는다. Spring Security는 표준 서블릿 필터를 사용하기 때문에, 두 요소를 동일하게 갖는다. Spring Security는 추가로 필터를 내부적으로 구성하는데, 각 필터는 각자 역할이 있고 필터 사이의 종속성이 있으므로 순서가 중요하다. XML Tag를 이용한 네임스페이스 구성을 사용하는 경우 필터가 자동으로 구성되지만, 네임스페이스 구성이 지원하지않는 기능을 써야하거나 커스터마이징된 필터를 사용해야 할 경우 명시적으로 빈을 등록 할 수 있다.
+
+클라이언트가 요청을 하면 `DelegatingFilterProxy`가 요청을 가로채고 Spring Security의 빈으로 전달합니다. `DelegatingFilterProxy`란 표준 서블릿 필터를 구현하고 있으며 내부에 위임대상(FilterChainProxy)를 갖고 있습니다. 이는 web.xml과 ApplicationContext 사이의 링크를 제공하는 역할을 합니다. DelegatingFilterProxy는 한 마디로 Spring의 애플리케이션 컨텍스트에서 얻은 Filter Bean을 대신 실행합니다.
+
+### Spring Security의 구조
+
+1. 사용자가 입력한 사용자 정보를 가지고 인증을 요청한다. (Request)
+2. AuthenticationFilter가 이를 가로채 UsernamePasswordAuthenticationToken(인증용 객체)를 생성한다.
+3. 필터는 요청을 처리하고 AuthenticationManager의 구현체 ProviderManager에 Authentication과 UsernamePasswordAuthenticationToken을 전달한다.
+4. AuthenticationManager는 검증을 위해 AuthenticationProvider에게 Authentication과 UsernamePasswordAuthenticationToken을 전달한다.
+5. 이제 DB에 담긴 사용자 인증정보와 비교하기 위해 UserDetailsService에 사용자 정보를 넘겨준다. DB에서 찾은 사용자 정보인 UserDetails 객체를 만든다.
+6. DB에서 찾은 사용자 정보인 UserDetails 객체를 만든다.
+7. AuthenticationProvider는 UserDetails를 넘겨받고 비교한다.
+8. 인증이 완료되면 권한과 사용자 정보를 담은 Authentication 객체가 반환된다.
+9. AuthenticationFilter까지 Authentication정보를 전달한다.
+10. Authentication을 SecurityContext에 저장한다.
+
+Authentication정보는 결국 SecurityContextHolder 세션 영역에 있는 SecurityContext에 Authentication 객체를 저장한다. 세션에 사용자 정보를 저장한다는 것은 전통적인 세션-쿠키 기반의 인증 방식을 사용한다는 것을 의미한다.
 
 ```java
 @RequiredArgsConstructor
@@ -30,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ```
 
 UsernamePasswordAuthenticationFilter를 상속받아 로그인, 로그인 실패, 로그인 성공 처리를 한다.
-1. 사용자가 아이디(username)과 비밀번호를 입력하면, 
+
+1. 사용자가 아이디(username)과 비밀번호를 입력하면,
 2. UsernamePasswordAuthenticationFilter는 UsernamePasswordAuthenticationToken을 생성한 후 AuthenticationManager로 전달한다.
 3. 그 후 해당 유저에 대한 검증은 AuthenticationManager가 처리하게 된다.
 
@@ -181,7 +200,8 @@ protected void configure(HttpSecurity http) throws Exception {
             .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 }
 ```
-### 
+
+# 참고한 사이트
 
 [https://velog.io/@shinmj1207/Spring-Spring-Security-JWT-%EB%A1%9C%EA%B7%B8%EC%9D%B8](https://velog.io/@shinmj1207/Spring-Spring-Security-JWT-%EB%A1%9C%EA%B7%B8%EC%9D%B8)
 [https://gaemi606.tistory.com/entry/Spring-Boot-Spring-Security-JWT-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC-%EA%B3%BC%EC%A0%95](https://gaemi606.tistory.com/entry/Spring-Boot-Spring-Security-JWT-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC-%EA%B3%BC%EC%A0%95)
