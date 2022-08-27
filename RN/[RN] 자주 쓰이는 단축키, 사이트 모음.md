@@ -25,8 +25,12 @@ rm -rf node_modules && yarn install && cd ios && rm -rf Pods && pod install && c
 ### React Dependency Error
 
 ```shell
+npm install --force
 npm install --legacy-peer-deps
 ```
+
+--force를 하면 package-lock.json에 몇가지의 다른 의존 버전들을 추가한다.
+--legacy를 하면 peerDependency가 맞지 않아도 일단 설치한다.
 
 ### Pods Install Error
 
@@ -53,3 +57,4 @@ kill -9 <PID>
 # 참고한 사이트
 
 [https://www.korecmblog.com/ERESOLVE-unable-to-resolve-dependency-tree/](https://www.korecmblog.com/ERESOLVE-unable-to-resolve-dependency-tree/)
+[https://velog.io/@yonyas/Fix-the-upstream-dependency-conflict-installing-NPM-packages-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0%EA%B8%B0](https://velog.io/@yonyas/Fix-the-upstream-dependency-conflict-installing-NPM-packages-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0%EA%B8%B0)
