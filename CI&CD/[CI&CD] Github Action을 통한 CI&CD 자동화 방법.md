@@ -32,13 +32,49 @@ main 브랜치로 머지하거나, **커밋을 푸쉬**하거나, 이슈를 누�
 
 ### 실제 적용하기
 
+1. 스프링 빌드 자동화
+
 ```shell
-.github/workflows/workflow.yml
+# .github/workflows/workflow.yml
+name: Java CI with Gradle
+
+on:
+  push:
+    branches:
+      - 'develop'
+
+  pull_request:
+    branches:
+      - 'develop'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      with:
+        arguments: build
 ```
 
 github의 actions에 들어가서 처리 할 것
 
-## 참고개념
+2. merge develop branch to master branch
+
+```shell
+
+```
 
 ### 헬로
 
