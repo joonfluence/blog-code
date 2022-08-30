@@ -14,9 +14,21 @@ sudo apt install default-jdk
 
 ```shell
 vi /etc/bash.bashrc
+```
+
+bash 파일을 수정해줍니다.
+
+```shell
 export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+```
+
+Java 명령어를 터미널에서 실행할 수 있도록 설정해줍니다.
+
+```shell
 source /etc/bash.bashrc
 ```
+
+변경사항을 저장해줍니다.
 
 ### 빌드방법
 
