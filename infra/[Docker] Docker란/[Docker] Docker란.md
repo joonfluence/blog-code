@@ -9,11 +9,11 @@
 
 ### 가상화란
 
-가상화란 하나의 하드웨어를 여러 개의 가상 머신으로 분할해 효율적으로 사용할 수 있는 기술을 말합니다. 분할된 가상 머신들은 각각 독립적인 환경으로 구동됩니다. 이 때, 베이스가 되는 기존의 환경을 `Host OS`, 가상 머신으로 분할된 각각의 환경을 `Guest OS`라고 부릅니다.
+가상화란 *하나의 하드웨어를 여러 개의 가상 머신으로 분할해 효율적으로 사용할 수 있는 기술*을 말합니다. 분할된 가상 머신들은 각각 독립적인 환경으로 구동됩니다. 이 때, 베이스가 되는 기존의 환경을 `Host OS`, 가상 머신으로 분할된 각각의 환경을 `Guest OS`라고 부릅니다.
 
 ### 컨테이너란
 
-하이퍼바이저와 달리 컨테이너는 베이스 환경의 OS를 공유하면서 필요한 프로세스만 격리하는 방식으로, 커널을 공유하기 때문에 호스트 OS의 기능을 모두 사용할 수 있습니다. 그렇기 때문에 컨테이너 위에서는 호스트 OS와 다른 OS를 구동할 수 없습니다.
+하이퍼바이저와 달리 컨테이너는 *베이스 환경의 OS를 공유하면서 필요한 프로세스만 격리하는 방식*으로, 커널을 공유하기 때문에 호스트 OS의 기능을 모두 사용할 수 있습니다. 그렇기 때문에 컨테이너 위에서는 호스트 OS와 다른 OS를 구동할 수 없습니다.
 
 ### VM과의 차이
 
@@ -29,13 +29,25 @@ cask 옵션을 주게 되면 Docker Desktop on Mac을 설치하게 되고 docker
 
 ### Ubuntu 설치 방법
 
+- 먼저, apt 패키지를 업데이트합니다.
+
 ```shell
 sudo apt-get update
 ```
 
+- 오래된 버젼의 도커는 지워줍니다.
+
+```
+sudo apt-get remove docker docker-engine docker.io containerd runc
+```
+
+오래된 버젼의 도커 컨텐츠가 있는지 조회해보고, 존재하면 삭제해줍니다.
+
 ```shell
 sudo apt-get install ca-certificates curl gnupg lsb-release
 ```
+
+그리고 apt가 HTTPS를 통해 저장소를 사용할 수 있도록 패키지를 설치합니다.
 
 ```shell
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -56,7 +68,17 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
-위의 명령어를 입력하면 자동으로 최신 버전이 설치 됩니다.
+앞서 mac에서 `brew install --cask docker`로 모든 요소가 설치되는 데 반해, Ubuntu에선 필요한 요소들을 직접 설치해줘야 합니다. docker-ce의 ce는 community edition을 말합니다.
+
+참고로 apt-get install 또는 apt-get update 명령으로 버전을 지정하지 않고 설치 또는 업데이트를 하면 항상 최신 버전이 설치되므로 안정성 측면에서 적합하지 않을 수도 있습니다.
+
+버젼을 조회하려면, 아래 명령어를 입력해줍니다.
+
+```
+apt-cache madison docker-ce
+```
+
+라고 입력해줍니다.
 
 ### 버전 확인
 
@@ -64,9 +86,26 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 docker --version
 ```
 
-# 마무리
+가장 단순하게는 버젼을 보시면 됩니다.
+
+### 명령어 확인하기
+
+```shell
+docker
+```
+
+### 도커 삭제하기
+
+```shell
+sudo apt-get purge docker-ce
+```
+
+단, 호스트의 이미지, 컨테이너, 볼륨 또는 사용자 정의된 구성 파일은 자동으로 삭제되지 않습니다.
+
+# 참고한 사이트
 
 [https://ssyoni.tistory.com/m/22](https://ssyoni.tistory.com/m/22)
 [https://velog.io/@jaryeonge/Docker-Mac%EC%97%90-Homebrew%EB%A1%9C-docker-%EC%84%A4%EC%B9%98](https://velog.io/@jaryeonge/Docker-Mac%EC%97%90-Homebrew%EB%A1%9C-docker-%EC%84%A4%EC%B9%98)
 [https://velog.io/@markany/%EB%8F%84%EC%BB%A4%EC%97%90-%EB%8C%80%ED%95%9C-%EC%96%B4%EB%96%A4-%EA%B2%83-1.-%EB%8F%84%EC%BB%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80](https://velog.io/@markany/%EB%8F%84%EC%BB%A4%EC%97%90-%EB%8C%80%ED%95%9C-%EC%96%B4%EB%96%A4-%EA%B2%83-1.-%EB%8F%84%EC%BB%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80)
 [https://shanepark.tistory.com/237](https://shanepark.tistory.com/237)
+[https://www.bsidesoft.com/7820](https://www.bsidesoft.com/7820)
