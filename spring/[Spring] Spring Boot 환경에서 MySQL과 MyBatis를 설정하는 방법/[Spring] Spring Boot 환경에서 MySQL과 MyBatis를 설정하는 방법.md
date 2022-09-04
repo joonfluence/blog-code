@@ -177,6 +177,12 @@ public interface UserProfileMapper {
 }
 ```
 
+혹은 아래와 같이, XML 파일에 SQL을 작성할수도 있습니다. resources 아래 mapper
+
+```xml
+
+```
+
 작성한 SQL 문을 아래에서처럼 간단하게 Controller에 등록해, 처리해줄 수 있습니다.
 
 ```java
@@ -222,6 +228,68 @@ public class UserProfileController {
     }
 }
 ```
+
+### SqlSessionFactoryBean과 SqlSessionTemplate
+
+MyBatis는 JdbcTemplate 대신 Connection 객체를 통한 질의를 위해서 `SqlSession`을 사용합니다. 내부적으로 SqlSessionTemplate가 SqlSession을 구현하게 되는데, Thread에서 안전하고 여러개의 Mapper에서 공유할 수 있습니다.
+구체적인 설정은 다음과 같습니다.
+
+```java
+package com.example.demo.config;
+
+import javax.sql.DataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+@MapperScan(value = "com.example.demo.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
+public class DataSourceConfig {
+
+    @Bean(name="dataSource")
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Primary
+    @Bean(name="sqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(
+            @Qualifier("dataSource") DataSource dataSource,
+            ApplicationContext applicationContext) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.example.demo.mapper");
+        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:mapper/*.xml"));
+
+        return sqlSessionFactoryBean.getObject();
+    }
+
+    @Primary
+    @Bean(name = "sessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(
+            @Qualifier("sqlSessionFactory") SqlSessionFactory sessionFactory) {
+        return new SqlSessionTemplate(sessionFactory);
+    }
+}
+```
+
+### MYBATIS의 장점과 단점
+
+장점과 단점은 아래와 같습니다.
+
+- 장점
+  - SQL 문을 Java로부터 분리하여, XML에서 모두 관리함으로써 개발자가 실수할 여지를 줄여줬다.
+- 단점
+  - 물리적으로 SQL과 JDBC API를 데이터 접근 계층에 숨기는 것까진 성공했지만, 논리적으로는 여전히 엔티티와 아주 강한 의존 관계를 갖음.
 
 # 마무리
 

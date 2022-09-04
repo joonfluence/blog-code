@@ -309,7 +309,7 @@ public class SpringConfig {
 
 ## Spring JDBC (JDBC 템플릿) => SQL Mapper
 
-다음 다뤄볼 건 Spring JDBC 혹은 JDBC 템플릿라 불리는 기술입니다. SQL Mapper라고도 합니다. 이 기술은 DB 연결과 해제 작업을 대신 해주기 때문에, 작성해야 할 코드 수가 많이 줄어들게 됩니다.
+다음 다뤄볼 건 Spring JDBC 혹은 JDBC 템플릿라 불리는 기술입니다. SQL Mapper라고도 합니다. 이 기술은 DB 연결과 해제 작업을 대신 해주기 때문에, 작성해야 할 코드 수가 많이 줄어들게 됩니다. SQL Mapper란 SQL을 직접 작성하고 Object필드를 매핑하여 데이터를 객체화 하는 것을 말합니다.
 
 ### 코드작성
 
@@ -382,25 +382,12 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 }
 ```
 
-### 장점과 단점
+### Jdbc Template(SQL Mapper)의 장점과 단점
 
 - 장점
   - DB 관리를 Jdbc Template에서 알아서 해준다.
 - 단점
   - 여전히 쿼리를 따로 작성해줘야 한다.
-
-## MYBATIS => SQL Mapper
-
-다음은 또 다른 SQL Mapper인 MyBatis 입니다. (MyBatis의 경우, 예문이 준비되어 있지 않아 향후 추가해놓겠습니다. )
-
-### 장점과 단점
-
-장점과 단점은 아래와 같습니다.
-
-- 장점
-  - SQL 문을 Java로부터 분리하여, XML에서 모두 관리함으로써 개발자가 실수할 여지를 줄여줬다.
-- 단점
-  - 물리적으로 SQL과 JDBC API를 데이터 접근 계층에 숨기는 것까진 성공했지만, 논리적으로는 여전히 엔티티와 아주 강한 의존 관계를 갖음.
 
 ## JPA => ORM
 
@@ -596,6 +583,8 @@ public class SpringConfig {
     }
 }
 ```
+
+스프링 데이터 JPA가 SpringDataJpaMemberRepository 를 스프링 빈으로 자동 해줍니다.
 
 ### 장점과 단점
 
