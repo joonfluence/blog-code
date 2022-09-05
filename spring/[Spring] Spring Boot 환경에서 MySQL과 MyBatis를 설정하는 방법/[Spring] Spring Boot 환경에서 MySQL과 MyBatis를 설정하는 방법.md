@@ -232,54 +232,44 @@ public class UserProfileController {
 ### SqlSessionFactoryBean과 SqlSessionTemplate
 
 MyBatis는 JdbcTemplate 대신 Connection 객체를 통한 질의를 위해서 `SqlSession`을 사용합니다. 내부적으로 SqlSessionTemplate가 SqlSession을 구현하게 되는데, Thread에서 안전하고 여러개의 Mapper에서 공유할 수 있습니다.
+SqlSessionFactory는 데이터베이스와의 연결과 SQL의 실행에 대한 모든 것을 가진 가장 중요한 객체입니다!
+
+DataSource(데이터소스)란 Connection Pool을 구현하기 위한 스펙을 정해놓은 인터페이스 입니다. 즉 DB 연동과 관련된 로직들이 추상화되어 있으며 DB연결을 위해 사용되는 객체이고 이것을 Spring에서 사용하기 위해서 설정해보도록 하겠습니다.
+
 구체적인 설정은 다음과 같습니다.
 
-```java
-package com.example.demo.config;
+### Mapper 검색
 
-import javax.sql.DataSource;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+application.properties 설정에서 xml 파일에 resultType으로 들어갈 Class의 경로와 xml로 작성된 xml 파일 경로를 입력해줍니다.
 
-@Configuration
-@MapperScan(value = "com.example.demo.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
-public class DataSourceConfig {
+```
+mybatis.mapper-locations:classpath*:mapper/*.xml
+mybatis.type-aliases-package=com.example.demo.model
+```
 
-    @Bean(name="dataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
-    }
+그러면 아래와 같이, XML 파일에 작성된 Mapper 파일에 쿼리를 작성해줄 수 있습니다.
 
-    @Primary
-    @Bean(name="sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(
-            @Qualifier("dataSource") DataSource dataSource,
-            ApplicationContext applicationContext) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.example.demo.mapper");
-        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:mapper/*.xml"));
-
-        return sqlSessionFactoryBean.getObject();
-    }
-
-    @Primary
-    @Bean(name = "sessionTemplate")
-    public SqlSessionTemplate sqlSessionTemplate(
-            @Qualifier("sqlSessionFactory") SqlSessionFactory sessionFactory) {
-        return new SqlSessionTemplate(sessionFactory);
-    }
-}
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserProfileMapper">
+    <select id="getUserProfileById" resultType="UserProfile">
+        SELECT * FROM UserProfile WHERE id=#{id} LIMIT 1
+    </select>
+    <select id="getUserProfileList" resultType="UserProfile">
+        SELECT * FROM UserProfile
+    </select>
+    <update id="updateUserProfile">
+        UPDATE UserProfile SET name=#{name}, phone=#{phone}, address=#{address} WHERE id=${id}
+    </update>
+    <delete id="deleteUserProfile">
+        DELETE FROM UserProfile WHERE id=#{id}
+    </delete>
+    <insert id="insertUserProfile">
+        INSERT INTO UserProfile VALUES(#{id}, #{name}, #{phone}, #{address})
+    </insert>
+</mapper>
 ```
 
 ### MYBATIS의 장점과 단점
@@ -298,3 +288,5 @@ public class DataSourceConfig {
 # 참고한 사이트
 
 https://shanepark.tistory.com/41
+
+---
