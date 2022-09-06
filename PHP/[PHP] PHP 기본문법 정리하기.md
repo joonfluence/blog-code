@@ -38,6 +38,15 @@
 ?>
 ```
 
+배열을 서로 합치는 방법
+
+```php
+$a = array('a', 'b');
+$b = array('c', 'd');
+$merge = array_merge($a, $b);
+// $merge is now equals to array('a','b','c','d');
+```
+
 5. 함수의 사용
 6. 변수 값 사용
 7. 쿠키 값 사용
@@ -80,3 +89,4 @@ $result = file_get_contents($url, false, $context, -1, 40000);
 # 참고한 사이트
 
 [https://www.php.net/manual/en/function.file-get-contents.php](https://www.php.net/manual/en/function.file-get-contents.php)
+[https://stackoverflow.com/questions/4268871/php-append-one-array-to-another-not-array-push-or](https://stackoverflow.com/questions/4268871/php-append-one-array-to-another-not-array-push-or)
