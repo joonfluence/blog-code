@@ -1,14 +1,6 @@
 # 본론
 
-### 패키지 설치
-
-```groovy
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'com.auth0:java-jwt:3.18.1'
-}
-```
+# 이론적 설명
 
 ### FilterChain
 
@@ -30,23 +22,6 @@ dependencies {
 10. Authentication을 SecurityContext에 저장한다.
 
 Authentication정보는 결국 SecurityContextHolder 세션 영역에 있는 SecurityContext에 Authentication 객체를 저장한다. 세션에 사용자 정보를 저장한다는 것은 전통적인 세션-쿠키 기반의 인증 방식을 사용한다는 것을 의미한다.
-
-```java
-@RequiredArgsConstructor
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .cors().and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest().authenticated();
-    }
-}
-```
-
 UsernamePasswordAuthenticationFilter를 상속받아 로그인, 로그인 실패, 로그인 성공 처리를 한다.
 
 1. 사용자가 아이디(username)과 비밀번호를 입력하면,
@@ -85,7 +60,7 @@ protected void successfulAuthentication(HttpServletRequest request,
     final String username = (String) authentication.getPrincipal();
 
     // response body에 넣을 값 생성
-        final Tokens tokens = jwtProvider.getTokens(username, authentication);
+    final Tokens tokens = jwtProvider.getTokens(username, authentication);
     Map<String, Object> body = new LinkedHashMap<>();
     body.put("access_token", tokens.getAccessToken());
     body.put("refresh_token", tokens.getRefreshToken());
@@ -198,6 +173,209 @@ protected void configure(HttpSecurity http) throws Exception {
             .and()
             .addFilter(new CustomAuthenticationFilter())
             .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+}
+```
+
+# 실제 구현하기
+
+### 패키지 설치
+
+```groovy
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'com.auth0:java-jwt:3.18.1'
+}
+```
+
+### 도메인 및 JPA 코드 작성
+
+User.java
+
+```java
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name="USERS")
+public class User{
+
+    @Id
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "user_pwd")
+    private String userPwd;
+
+    @Column
+    private String company;
+
+    @Column
+    private String position;
+}
+
+```
+
+UserRepository.java
+
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, String> {
+
+}
+```
+
+### Spring Security 설정하기
+
+```java
+@RequiredArgsConstructor
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable() // (1)
+                .cors().and() // (2)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // (3)
+                .and()
+                .authorizeRequests() // (4)
+                .anyRequest().authenticated();
+                .and()
+                .httpBasic(); // (5)
+    }
+}
+```
+
+(1) CSRF(Cross Site Request Forgery) 사이트 간 요청 위조 설정이다. 이건 설정이 복잡하기도하고 REST API 서버용으로만 사용할거기 때문에 disable 해준다.
+(2) 교차출처 리소스 공유(CORS)를 허용해준다는 의미이다. 프론트엔드 서버가 따로 있을 경우, 해당 설정이 필요하다. 그래서 corsConfigurationSource Bean을 통해 addAllowedOrigin (Access-Control-Allow-Origin)에 모든 출처를 허용, setAllowedMethods에 위와 같은 Request 방식을 허용, addAllowedHeader (Access-Control-Allow-Methods)를 허용하도록 설정해준다.
+(3) JWT를 쓰려면 Spring Security에서 기본적으로 지원하는 Session 설정 대신, STATELESS로 구성해야 한다.
+(4) 어느 요청이든 권한 체크를 해준다는 의미이다.
+(5) Spring Security에서 간단한 로그인 화면을 제공한다.
+
+### JWT 설정해주기
+
+```java
+@Slf4j
+@Component
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    @Override
+    public void commence(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        AuthenticationException e) throws IOException {
+
+        log.error("Responding with unauthorized error. Message - {}", e.getMessage());
+
+        ErrorCode unAuthorizationCode = (ErrorCode) request.getAttribute("unauthorization.code");
+
+        request.setAttribute("response.failure.code", unAuthorizationCode.name());
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, unAuthorizationCode.message());
+    }
+}
+```
+
+이 다음은 JWT 토큰을 통한 인증을 설정해줄 차례이다.
+
+```java
+@Slf4j
+public class JwtTokenProvider {
+    private static final String JWT_SECRET = "secretKey";
+
+    // 토큰 유효시간
+    private static final int JWT_EXPIRATION_MS = 604800000;
+
+    // jwt 토큰 생성
+    public static String generateToken(Authentication authentication) {
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
+
+        return Jwts.builder()
+            .setSubject((String) authentication.getPrincipal()) // 사용자
+            .setIssuedAt(new Date()) // 현재 시간 기반으로 생성
+            .setExpiration(expiryDate) // 만료 시간 세팅
+            .signWith(SignatureAlgorithm.HS512, JWT_SECRET) // 사용할 암호화 알고리즘, signature에 들어갈 secret 값 세팅
+            .compact();
+    }
+
+    // Jwt 토큰에서 아이디 추출
+    public static String getUserIdFromJWT(String token) {
+        Claims claims = Jwts.parser()
+            .setSigningKey(JWT_SECRET)
+            .parseClaimsJws(token)
+            .getBody();
+
+        return claims.getSubject();
+    }
+
+    // Jwt 토큰 유효성 검사
+    public static boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token);
+            return true;
+        } catch (SignatureException ex) {
+            log.error("Invalid JWT signature");
+        } catch (MalformedJwtException ex) {
+            log.error("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            log.error("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            log.error("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            log.error("JWT claims string is empty.");
+        }
+        return false;
+    }
+}
+```
+
+이제 Jwt 인증 Filter를 만들어준다.
+
+```java
+@Slf4j
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+        throws ServletException, IOException {
+        try {
+            String jwt = getJwtFromRequest(request); //request에서 jwt 토큰을 꺼낸다.
+            if (StringUtils.isNotEmpty(jwt) && JwtTokenProvider.validateToken(jwt)) {
+                String userId = JwtTokenProvider.getUserIdFromJWT(jwt); //jwt에서 사용자 id를 꺼낸다.
+
+                UserAuthentication authentication = new UserAuthentication(userId, null, null); //id를 인증한다.
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); //기본적으로 제공한 details 세팅
+
+                SecurityContextHolder.getContext().setAuthentication(authentication); //세션에서 계속 사용하기 위해 securityContext에 Authentication 등록
+            } else {
+                if (StringUtils.isEmpty(jwt)) {
+                    request.setAttribute("unauthorization", "401 인증키 없음.");
+                }
+
+                if (JwtTokenProvider.validateToken(jwt)) {
+                    request.setAttribute("unauthorization", "401-001 인증키 만료.");
+                }
+            }
+        } catch (Exception ex) {
+            logger.error("Could not set user authentication in security context", ex);
+        }
+
+        filterChain.doFilter(request, response);
+    }
+
+    private String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.isNotEmpty(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring("Bearer ".length());
+        }
+        return null;
+    }
 }
 ```
 
