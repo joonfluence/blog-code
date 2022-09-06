@@ -227,8 +227,13 @@ docker run -d -p 80:8080 [이미지명]
 
 Public DNS를 80번 포트로 접속해 접속을 확인합니다.
 
+### 로그 확인
+
+docker logs [컨테이너명]
+
 # 참고한 사이트
 
 [https://wooono.tistory.com/123](https://wooono.tistory.com/123)
 [https://www.yalco.kr/36_docker/](https://www.yalco.kr/36_docker/)
 [https://sas-study.tistory.com/425](https://sas-study.tistory.com/425)
+[https://devopsnet.tistory.com/42](https://devopsnet.tistory.com/42)
