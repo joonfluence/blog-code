@@ -31,11 +31,13 @@
 ### 시간복잡도
 
 구현하기 쉽지만 느리게 동작하는 경우와 구현하기에는 까다롭지만 빠르게 동작하는 경우가 있습니다. 첫번째의 경우, 그리디 알고리즘을 활용하는 경우이며 시간복잡도는 O(V^2)입니다.
-이 때, 단계를 거치며 한 번 처리된 노드의 최단 거리는 고정되어 더 이상 바뀌지 않습니다.
-한 단계당 하나의 노드에 대한 최단 거리를 확실하게 찾는 형태입니다. 
-두번째의 경우에는 O(V)입니다.
 
-### 실제 구현 
+이 때, 단계를 거치며 한 번 처리된 노드의 최단 거리는 고정되어 더 이상 바뀌지 않습니다.
+한 단계당 하나의 노드에 대한 최단 거리를 확실하게 찾는 형태입니다.
+일반적으로 코딩 테스트 최단 경로 문제에서 전체 노드가 5000개 이하일 경우, 시간 기준 제한에 걸리지 않을 것입니다.
+하지만 10000개가 넘어가는 경우에는 문제가 발생될 수 있습니다.
+
+### 실제 구현
 
 ```python
 import sys
@@ -71,7 +73,7 @@ def get_smallest_node():
   return index
 
 def dijkstra(start):
-  # 시작 노드에 대해서 초기화 
+  # 시작 노드에 대해서 초기화
   distance[start] = 0
   visited[start] = True
   for j in graph[start]:
@@ -99,6 +101,97 @@ for i in range(1, n + 1):
   else:
     print(distance[i])
 
+```
+
+### 개선된 다익스트라 알고리즘
+
+우선순위 큐 자료구조를 사용합니다.
+우선순위 큐는 리스트와 힙으로 구현할 수 있는데 삽입/삭제에 각각 O(1), O(N)만큼 소요되고, 힙은 각각 O(logN)만큼 소요됩니다. 이번 시간에는 힙을 사용하겠습니다.
+
+### 최소 힙
+
+```python
+import heapq
+
+# 오름차순 힙 정렬(Heap Sort)
+def heapsort(iterable):
+  h = []
+  result = []
+  # 모든 원소를 차례대로 힙에 삽입
+  for value in iterable:
+    heapq.heappush(h, value)
+  # 힙에 삽입된 모든 원소를 차례대로 꺼내어 담기
+  for i in range(len(h)):
+    result.append(heapq.heappush(heapq.heappop(h)))
+  return result
+
+result = heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
+print(result) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+단계마다 방문하지 않은 노드 중에서 최단 거리가 가장 짧은 노드를 선택하기 위해 힙 자료구조를 이용합니다.
+다익스트라 알고리즘이 동작하는 기본 원리는 동일합니다.
+
+- 현재 가장 가까운 노드를 저장해 놓기 위해서 힙 자료구조를 추가적으로 이용한다는 점이 다릅니다.
+- 현재의 최단 거리가 가장 짧은 노드를 선택해야 하므로 최소 힙을 사용합니다.
+
+### 동작 과정
+
+1. 우선순위 큐에서 원소를 꺼냅니다. 그리고 최단 거리 값을 갱신합니다.
+2. 큐에 값이 없을 때까지 1번을 계속 반복합니다.
+
+### 실제 구현
+
+```python
+import heapq
+import sys
+input sys.stdin.readline
+INF = int(1e9) # 무한을 의미하는 값으로 10억을 설정
+
+# 노드의 개서, 간선의 개수를 입력받기
+n, m = map(int, input().split())
+# 시작 노드 번호를 입력받기
+start = int(input())
+# 각 노드에 연결되어 있는 노드에 대한 정보를 담는 리스트를 만들기
+graph = [[] for i in range(n + 1)]
+distance = [INF] * (n + 1)
+
+# 모든 간선 정보를 입력받기
+for _ in range(m):
+  a, b, c = map(int, input().split())
+  # a번 노드에서 b번 노드로 가는 비용이 c라는 의미
+  graph[a].append((b, c))
+
+def dijkstra(start):
+  q = []
+  # 시작 노드로 가기 위한 최단 거리는 0으로 설정하여, 큐에 삽입
+  heapq.heappush(q, (0, start))
+  distance[start] = 0
+  while q: # 큐가 비어 있지 않다면
+    # 가장 최단 거리가 짧은 노드에 대한 정보를 꺼낸다
+    dist, now = heapq.heappop(q)
+    # 현재 노드가 이미 처리된 적이 있는 노드라면 무시한다
+    if distance[now] < dist:
+      continue
+    # 현재 노드와 연결된 다른 인접한 노드들을 확인
+    for i in graph[now]:
+      cost = dist + i[1]
+      # 현재 노드를 거쳐서, 다른 노드로 이동하는 거리가 더 짧은 경우
+      if cost < distance[i[0]]:
+        distance[i[0]] = cost
+        heapq.heappush(q, (cost, i[0]))
+
+# 다익스트라 알고리즘을 수행
+dijkstra(start)
+
+# 모든 노드로 가기 위한 최단 거리를 출력
+for i in range(1, n + 1):
+  # 도달할 수 업슨 경우, 무한(INFINITY)라고 출력
+  if distance[i] == INF:
+    print("INFINITY")
+  # 도달할 수 있는 경우, 거리를 출력
+  else:
+    print(distance[i])
 ```
 
 ### 플로이드 워셜 알고리즘
