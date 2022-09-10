@@ -1,6 +1,4 @@
-# 본론
-
-# 이론적 설명
+# 본문
 
 ### FilterChain
 
@@ -52,10 +50,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 * accessToken, refreshToken 응답 값에 세팅
 * */
 @Override
-protected void successfulAuthentication(HttpServletRequest request,
-                                        HttpServletResponse response,
-                                        FilterChain chain,
-                                        Authentication authentication) throws IOException {
+protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
     // 로그인에 성공한 유저
     final String username = (String) authentication.getPrincipal();
 
@@ -232,7 +227,15 @@ public interface UserRepository extends JpaRepository<User, String> {
 }
 ```
 
-### Spring Security 설정하기
+## Spring Security 설정하기
+
+### 기타 설정
+
+- @Configuration : 자바로 진행하는 설정 클래스에 붙이는 어노테이션으로 스프링 빈으로 만들고 스프링 프로젝트가 시작될 때 스프링 시큐리티 설정 내용에 반영되도록 한다.
+- @EnableWebSecurity : 스프링 시큐리티를 활성화하는 어노테이션이다.
+  - @EnableGlobalAuthentication : Configuring AuthenticationManagerBuilder in a class without the EnableGlobalAuthentication annotation has unpredictable results.
+  - ...
+- WebSecurityConfigureAdapter : 스프링 시큐리티 설정 관련 클래스로 커스텀 설정 클래스가 이 클래스의 메소드를 오버라이딩하여 설정하여야 스프링 시큐리티에 반영된다.
 
 ```java
 @RequiredArgsConstructor
@@ -383,3 +386,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 [https://velog.io/@shinmj1207/Spring-Spring-Security-JWT-%EB%A1%9C%EA%B7%B8%EC%9D%B8](https://velog.io/@shinmj1207/Spring-Spring-Security-JWT-%EB%A1%9C%EA%B7%B8%EC%9D%B8)
 [https://gaemi606.tistory.com/entry/Spring-Boot-Spring-Security-JWT-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC-%EA%B3%BC%EC%A0%95](https://gaemi606.tistory.com/entry/Spring-Boot-Spring-Security-JWT-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC-%EA%B3%BC%EC%A0%95)
+[https://sas-study.tistory.com/410](https://sas-study.tistory.com/410)
