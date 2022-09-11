@@ -16,7 +16,7 @@ API 서버는 유저의 세션을 관리하는 것이 아닌 특정 토큰에 �
 
 보통 별도의 API 서버가 존재한다면 앱 어플리케이션인 SPA 프레임워크(react, vue, angular 등)를 사용하게 될텐데요. 이때 스프링 프로젝트와는 다른포트를 사용할 것입니다. 혹은 다른 서버(물리)일 수 있구요.
 
-### 실제 구현하기
+### HttpSecurity 설정하기
 
 Security 설정을 위해 사용하던 WebSecurityConfigurerAdapter는 SpringSecurity 5.3 버젼부터 더 이상 쓰지 않음.
 
@@ -37,6 +37,95 @@ public class SecurityConfig {
     }
 }
 ```
+
+### UserDetails, UserDetailsService 인터페이스 구현하기
+
+- UserDetails : 우리가 구현해야 할 User 객체를 말합니다.
+
+```java
+public class SecurityUser implements UserDetails {
+    private Member member;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public String getPassword() {
+        return member.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return member.getName();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+}
+
+```
+
+- UserDetailsService : UserDetailsService에서 UserDetails을 구현하여, loadUserByUsername라는 오버라이딩 메소드의 Request에서 받은 로그인 데이터를 활용하여 로그인 로직을 처리해줍니다. 이때 해당 메소드가 인증된 결과를 가지고 UserDetails 인터페이스를 구현하는 인증대상객체를 리턴해줍니다.
+
+```java
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+    @Override
+    public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
+        System.out.println("인증을 받습니다.");
+        //로그인 로직 시작
+        // loginId를 이용하여 DB에서 User 객체를 가져옵니다.
+        // User user = mapper.getUser(loginID);
+        // User의 정보를 SecurityUser 에 담아줍니다. 이는 생성자를 이용하는 편입니다.
+        return new SecurityUser();
+    }
+}
+```
+
+실제로는 이 부분에서 Mapper라던지 Repository라던지 DI가 발생하여 의존성을 주입해주고 디비로 다녀와서 id에 맞는 데이터를 가져와서 Security 객체에 담아주는 작업을 해줍니다.
+
+### 인증 Filter 작성하기
+
+앞서 인증 대상 객체(UserDetails)와 인증 서비스 로직(UserDetailsService)를 구현했으니, 
+REST API 기반의 서버를 구현할 것이므로 매 요청마다 인증 처리를 통과해야 합니다. 그렇게 되면 인증 토큰이 발행되어야 하지만, 우선 무조건 인증되는 방식으로 먼저 구현해보겠습니다.
+
+```java
+public class OncePerRequestFilterImpl extends OncePerRequestFilter {
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        UserDetails authentication = userDetailsServiceImpl.loadUserByUsername("sample");
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(authentication.getUsername(), null, null);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        filterChain.doFilter(request, response);
+    }
+}
+```
+
+OncePerRequestFilter를 상속받아 doFilterInternal 메소드를 재정의해줍니다. 매 Request 마다 Controller 전에 해당 필터를 수행할 것이고 SecurityContextHolder에 있는 Context 객체의 authentication 여부에 따라 인증여부가 결정되게 됩니다. 
+
+
 
 # 참고한 사이트
 
