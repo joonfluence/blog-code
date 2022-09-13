@@ -156,3 +156,5 @@ exit 0
 [https://www.youtube.com/watch?v=R8_veQiYBjI&ab_channel=TechWorldwithNana](https://www.youtube.com/watch?v=R8_veQiYBjI&ab_channel=TechWorldwithNana)
 [https://velog.io/@wlrhkd49/Github-Actions%EB%A1%9C-AWS-EC2-%EC%84%9C%EB%B2%84%EC%97%90-%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94](https://velog.io/@wlrhkd49/Github-Actions%EB%A1%9C-AWS-EC2-%EC%84%9C%EB%B2%84%EC%97%90-%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94)
 [https://jojoldu.tistory.com/281](https://jojoldu.tistory.com/281)
+[https://jojoldu.tistory.com/282](https://jojoldu.tistory.com/282)
+[https://jojoldu.tistory.com/283](https://jojoldu.tistory.com/283)
