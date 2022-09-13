@@ -76,10 +76,83 @@ github의 actions에 들어가서 처리 할 것
 
 ```
 
-### 헬로
+3. Deploy via S3 using AWS Code Deploy
+
+```shell
+ame: logging-system
+
+on:
+  workflow_dispatch:
+
+env:
+  S3_BUCKET_NAME: s3-unanimous
+  PROJECT_NAME: unanimous
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # zip 파일을 압축한다.
+      - name: Make zip file
+        run: zip -r ./$GITHUB_SHA.zip .
+        shell: bash
+
+    # AWS credentials 사용한다.
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ImageCodeDeployAccessKey }}
+          aws-secret-access-key: ${{ secrets.ImageCodeDeploySecretKey }}
+          aws-region: ${{ secrets.ImageCodeDeployRegion }}
+
+    # jar 파일을 S3에 업로드한다.
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+
+    # Code Deploy로 자동 배포한다.
+      - name: Code Deploy
+        run: aws deploy create-deployment --application-name logging-system-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+        working-directory: ./unanimous
+```
+
+### 배포된 서버 자동으로 실행하기
+
+```shell
+# run_new_was.sh
+
+#!/bin/bash
+
+CURRENT_PORT=$(cat /home/ubuntu/service_url.inc | grep -Po '[0-9]+' | tail -1)
+TARGET_PORT=0
+
+echo "> Current port of running WAS is ${CURRENT_PORT}."
+
+if [ ${CURRENT_PORT} -eq 8081 ]; then
+  TARGET_PORT=8082
+elif [ ${CURRENT_PORT} -eq 8082 ]; then
+  TARGET_PORT=8081
+else
+  echo "> No WAS is connected to nginx"
+fi
+
+TARGET_PID=$(lsof -Fp -i TCP:${TARGET_PORT} | grep -Po 'p[0-9]+' | grep -Po '[0-9]+')
+
+if [ ! -z ${TARGET_PID} ]; then
+  echo "> Kill WAS running at ${TARGET_PORT}."
+  sudo kill ${TARGET_PID}
+fi
+JAR_NAME=$(ls -tr /home/ubuntu/[프로젝트명]/build/libs/game-0.0.1-SNAPSHOT.jar | tail -n 1)
+echo "> JAR Name: $JAR_NAME"
+chmod +x $JAR_NAME
+nohup java -jar -Dserver.port=${TARGET_PORT} $JAR_NAME > /home/ubuntu/nohup.out 2>&1 &
+echo "> Now new WAS runs at ${TARGET_PORT}."
+exit 0
+```
 
 # 참고사이트
 
 [https://www.youtube.com/watch?v=iLqGzEkusIw&ab_channel=%EB%93%9C%EB%A6%BC%EC%BD%94%EB%94%A9](https://www.youtube.com/watch?v=iLqGzEkusIw&ab_channel=%EB%93%9C%EB%A6%BC%EC%BD%94%EB%94%A9)
 [https://www.youtube.com/watch?v=R8_veQiYBjI&ab_channel=TechWorldwithNana](https://www.youtube.com/watch?v=R8_veQiYBjI&ab_channel=TechWorldwithNana)
 [https://velog.io/@wlrhkd49/Github-Actions%EB%A1%9C-AWS-EC2-%EC%84%9C%EB%B2%84%EC%97%90-%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94](https://velog.io/@wlrhkd49/Github-Actions%EB%A1%9C-AWS-EC2-%EC%84%9C%EB%B2%84%EC%97%90-%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94)
+[https://jojoldu.tistory.com/281](https://jojoldu.tistory.com/281)
