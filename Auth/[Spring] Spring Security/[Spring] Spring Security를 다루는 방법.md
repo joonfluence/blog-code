@@ -125,7 +125,18 @@ public class OncePerRequestFilterImpl extends OncePerRequestFilter {
 
 OncePerRequestFilter를 상속받아 doFilterInternal 메소드를 재정의해줍니다. 매 Request 마다 Controller 전에 해당 필터를 수행할 것이고 SecurityContextHolder에 있는 Context 객체의 authentication 여부에 따라 인증여부가 결정되게 됩니다. 
 
+### AuthenticationEntryPoint 작성하기
 
+이번엔 인증작업을 처리하기 위한 로직 구현을 살펴보겠습니다. 
+
+### JWT 인증 토큰 
+
+SecurityContext에 어떤 방식으로 인증 정보를 저장할 수 있을까요? 
+불러오는 방법은 토큰의 Header 값을 불러옵니다. 
+저장해야 할 정보는 UsernamePasswordAuthenticationToken 입니다.
+저장 방법은 SecurityContextHolder.setContext를 사용합니다. 
+
+### Header의 토큰 정보 불러오기 
 
 # 참고한 사이트
 
@@ -135,4 +146,6 @@ OncePerRequestFilter를 상속받아 doFilterInternal 메소드를 재정의해�
 [https://sas-study.tistory.com/360](https://sas-study.tistory.com/360)
 [https://sas-study.tistory.com/362](https://sas-study.tistory.com/362)
 [https://sas-study.tistory.com/363](https://sas-study.tistory.com/363)
+[https://devbksheen.tistory.com/entry/Spring-Security-JWT](https://devbksheen.tistory.com/entry/Spring-Security-JWT)
 [https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)
+[https://velog.io/@gmtmoney2357/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-Authentication-SecurityContext](https://velog.io/@gmtmoney2357/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-Authentication-SecurityContext)
