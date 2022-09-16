@@ -1,8 +1,9 @@
 # 본문
 
-### 외래키 제약 조건 있어도 삭제하기
+### 칼럼 삭제하기
 
 ```sql
+ALTER TABLE 테이블명 DROP 칼럼명;
 ALTER TABLE 테이블명 DROP FOREIGN KEY 칼럼명;
 ```
 
