@@ -88,3 +88,9 @@ Create Table CustomerProductList(
   FOREIGN KEY(ProductId) references Product(PKey)
 );
 ```
+
+### Primary Key 설정
+
+```sql
+ALTER TABLE Persons ADD PRIMARY KEY (PKey);
+```
