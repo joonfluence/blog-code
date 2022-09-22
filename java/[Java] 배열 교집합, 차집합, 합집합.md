@@ -21,7 +21,7 @@ arrayList2가 arrayList의 부분집합인지 판별함.
 ```java
 arrayList.containAll(arrayList2);
 ```
-
+assasaas
 ### 합집합
 
 # 참고한 사이트
