@@ -94,3 +94,9 @@ Create Table CustomerProductList(
 ```sql
 ALTER TABLE Persons ADD PRIMARY KEY (PKey);
 ```
+
+### IF ~ ELSE 조건문
+
+```sql
+SELECT IF(조건문, '참일때 값', '거짓일 때 값') FROM 테이블명
+```
