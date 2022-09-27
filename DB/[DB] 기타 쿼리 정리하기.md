@@ -7,6 +7,12 @@ ALTER TABLE 테이블명 DROP 칼럼명;
 ALTER TABLE 테이블명 DROP FOREIGN KEY 칼럼명;
 ```
 
+### 칼럼 속성 수정하기
+
+```sql
+ALTER TABLE 테이블명 MODIFY COLUMN 칼럼명 int(2) DEFAULT 0 NULL;
+```
+
 ### 테이블 날리기
 
 ```sql
