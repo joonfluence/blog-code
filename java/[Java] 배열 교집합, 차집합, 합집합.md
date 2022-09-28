@@ -21,8 +21,14 @@ arrayList2가 arrayList의 부분집합인지 판별함.
 ```java
 arrayList.containAll(arrayList2);
 ```
-assasaas
+
 ### 합집합
+
+### 일치 여부 조회
+
+```java
+Arrays.equals(array1, array2);
+```
 
 # 참고한 사이트
 
