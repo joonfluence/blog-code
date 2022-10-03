@@ -1,3 +1,7 @@
+# 서론
+
+오늘은 Java에서 ArrayList에 제공되는 다양한 메서드들에 관해 알아보는 시간을 갖겠습니다.
+
 ### 교집합
 
 arrayList에서 arrayList2와 중복된 값만 남김.
@@ -8,7 +12,7 @@ arrayList.retainlAll(arrayList2);
 
 ### 차집합
 
-arrayList에서 arrayList2와 같은 리스트 값을 모두 제거함.
+arrayList에서 arrayList2와 같은 리스트 값을 모두 제거하여, 반환된다.
 
 ```java
 arrayList.removeAll(arrayList2);
@@ -16,13 +20,19 @@ arrayList.removeAll(arrayList2);
 
 ### 부분집합
 
-arrayList2가 arrayList의 부분집합인지 판별함.
+arrayList의 부분집합이 반환된다.
 
 ```java
-arrayList.containAll(arrayList2);
+arrayList.containsAll(arrayList2);
 ```
 
 ### 합집합
+
+인자를 포함한 결괏값이 반환된다.
+
+```java
+arrayList.addAll(arrayList2);
+```
 
 ### 일치 여부 조회
 

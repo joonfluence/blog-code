@@ -1,0 +1,1 @@
+Q. INNER JOIN vs OUTER JOIN?
