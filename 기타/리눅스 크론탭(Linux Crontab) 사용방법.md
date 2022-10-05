@@ -112,10 +112,21 @@ service cron restart # (재가동)
 service cron status
 ```
 
-- cron 실행중 출력한 메세지는 /var/mail 에서 확인할 수 있다.
+### 메세지 확인 방법
+
+- Mac : cron 실행중 출력한 메세지는 /var/mail 에서 확인할 수 있다.
 
 ```shell
 cat /var/mail/root
+```
+
+- Linux : /var/log에서 로그가 생성됩니다. 
+
+```shell
+cron.log
+cron.log.1
+cron.log.2.gz
+cron.log.3.gz
 ```
 
 # 참고한 사이트
