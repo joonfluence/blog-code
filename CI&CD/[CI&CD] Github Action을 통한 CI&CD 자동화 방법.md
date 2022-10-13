@@ -116,6 +116,19 @@ jobs:
         working-directory: ./unanimous
 ```
 
+4. application property 설정하기 
+
+```shell
+name: make application.properties
+run: |
+  cd ./src/main/resources
+  touch ./application.properties
+  echo "${{ secrets.PROPERTIES }}" > ./application.properties
+shell: bash
+```
+
+github secrets에 추가해줄 것. 
+
 ### 배포된 서버 자동으로 실행하기
 
 ```shell

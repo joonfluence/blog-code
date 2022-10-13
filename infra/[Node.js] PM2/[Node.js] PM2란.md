@@ -4,19 +4,20 @@
 
 ### 자주 사용하는 명령어
 
-```
+```shell
 pm2 start [프로세스명]
+pm2 start [node.js]
 ```
 
-```
+```shell
 pm2 stop [프로세스명]
 ```
 
-```
+```shell
 pm2 restart [프로세스명]
 ```
 
-```
+```shell
 pm2 monit
 ```
 
