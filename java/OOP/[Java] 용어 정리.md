@@ -38,7 +38,7 @@
 
 ### 인터페이스
 
-인터페이스를 쓰는 이유
+**인터페이스를 쓰는 이유**
 
 - 개발 시간 단축
 - 표준화 가능
@@ -47,7 +47,45 @@
 
 연관 관계가 있는 클래스를 인터페이스로 정해두면 좋다.
 
+### 내부 클래스
+
+한 클래스를 다른 클래스의 내부 클래스로 선언하면 두 클래스의 멤버들 간에 서로 쉽게 접근할 수 있다는 장점과 외부에는 불필요한 클래스를 감춤으로써 코드의 복잡성을 줄일 수 있다.
+
 ### 클래스 메서드와 인스턴스 메서드
 
 인스턴스 메서드는 인스턴스 변수와 관련된 작업을 하는, 즉 메서드의 작업을 수행하는데 인스턴스 변수를 필요로 하는 메서드이다.
-클래스 메서드는 인스턴스와 관계없는 메서드를 말한다.
+클래스 메서드는 인스턴스와 관계없는 메서드를 말한다. 따라서 인스턴스를 생성하지 않아도 사용할 수 있다.
+
+```java
+class MyMath2 {
+  long a, b;
+
+  // 인스턴스 변수 a, b만을 이용해서 작업하므로 매개변수가 필요 없다.
+  long add(){
+    return a + b;
+  };
+  long substract(){
+    return a - b;
+  }
+  long multiply(){
+    return a * b;
+  };
+  double divide(){
+    return a / b;
+  }
+
+  // 인스턴스 변수와 관계 없이 매개변수 만으로 작업이 가능하다.
+  static long add(long a, long b){
+    return a + b;
+  }
+  static long substract(long a, long b){
+    return a - b;
+  }
+  static long multiply(long a, long b){
+    return a * b;
+  }
+  static long divide(double a, double b){
+    return a / b;
+  }
+}
+```
