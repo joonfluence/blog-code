@@ -38,6 +38,21 @@ set PASSWORD FOR 'root'@'localhost' = PASSWORD("1234");
 
 ## 필터링
 
+## 서브쿼리
+
+```sql
+SELECT *
+FROM store
+WHERE sales >
+(
+  SELECT description
+  FROM sales_goals
+  WHERE target = 'minimum'
+);
+```
+
+서브쿼리를 사용할 때, 서브쿼리의 조회 결과는 하나여야 한다.
+
 ### 테이블 간 결합
 
 - JOIN : 조인문 사용해서 두 테이블 간 데이터를 연관 지어 가져올 수 있다.
