@@ -56,7 +56,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
             docker pull dalicious77/spring-food-table:${GITHUB_SHA::7}
-            docker tag dalicious77/spring-food-table:${GITHUB_SHA::7} spring-food-table
+            docker tag dalicious77/spring-food-table:${GITHUB_SHA::7} server
             docker stop server
             docker run -d --rm --name server -p 3000:8080 spring-food-table
 ```
