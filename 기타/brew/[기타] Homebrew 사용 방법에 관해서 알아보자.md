@@ -32,14 +32,38 @@ brew remove [패키지명]
 brew uninstall [패키지명]
 ```
 
+### 설치 목록 확인
+
+해당 명령어를 실행하면, 설치 목록이 쭉 나열됩니다.
+
+```shell
+brew list
+```
+
+### 설치 경로 확인
+
+설치 정보를 확인하는 방법은 아래와 같습니다.
+
+```shell
+brew info [패키지명]
+```
+
+출력 결과는 아래와 같습니다. 예시로, 제 로컬 PC에 설치된 Node.js의 경로를 찾아보도록 하겠습니다.
+
+```shell
+brew info node
+# 출력 결과
+/opt/homebrew/Cellar/node/18.2.0
+```
+
 ### 아이콘 옵션
 
 ```shell
-brew --cask [패키지명]
+brew install --cask [패키지명]
 ```
 
-cask 옵션을 주면 쉽게 데스크톱 아이콘을 생성할 수 있습니다. 개발 외 일반적인 용도로 사용하는 소프트웨어는 대부분 --cask 옵션을 통해 설치하실 수 있습니다.
-notion, figma, xcodes 등등 말이죠.
+install 할 때, cask 옵션을 주면 쉽게 데스크톱 아이콘을 생성할 수 있습니다.
+개발 외 일반적인 용도로 사용하는 소프트웨어는 대부분 --cask 옵션을 통해 설치하실 수 있으며, 아이콘 옵션이 제공되는 패키지가 따로 존재합니다. 대표적인 예시가 notion, figma, xcodes 등등 입니다.
 
 ### 자주 사용하는 앱
 
