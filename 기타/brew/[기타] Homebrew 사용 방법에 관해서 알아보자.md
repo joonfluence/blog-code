@@ -1,9 +1,10 @@
 # 서론
 
-오늘은 Mac에서 필수적으로 쓰이는 Package manager인 brew를 활용해서 로컬 개발환경을 셋팅하는 방법에 관해서 알아보도록 하겠습니다.
-오랜만에 블로그 포스팅인만큼 평소에 제가 자주 사용하는 패키지까지 모두 이야기 드리겠습니다!
+오늘은 Mac에서 필수적으로 쓰이는 Package manager인 brew를 활용해서 로컬 개발환경을 셋팅하는 방법에 관해서 알아보도록 하겠습니다. 오랜만에 블로그 포스팅인만큼 평소에 제가 자주 사용하는 패키지까지 모두 이야기 드리겠습니다!
 
-![brew](brew.md)
+<br />
+
+![brew](./brew.png)
 
 ### Homebrew 설치 방법
 
@@ -70,6 +71,8 @@ install 할 때, cask 옵션을 주면 쉽게 데스크톱 아이콘을 생성�
 - 화면 정리 앱 : rectangle
 
 자세한 사용 방법은 다음과 같습니다. [https://hokari.tistory.com/78](https://hokari.tistory.com/78)
+
+<br />
 
 - 달력 앱 : itsycal
 - 터미널 단어 자동완성 기능 제공 : zsh-autosuggestions
