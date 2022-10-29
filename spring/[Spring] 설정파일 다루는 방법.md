@@ -6,7 +6,7 @@ Spring Boot를 이용해서 어플리케이션을 만들다 보면 외부에서 
 
 ### 설정파일 다루는 방법
 
-아래 예시와 같이, application.properties에 숨겨둘 파일을 설정해준다. 
+아래 예시와 같이, application.properties에 숨겨둘 파일을 설정해준다.
 
 ```
 cloud.aws.stack.auto=false
@@ -25,65 +25,4 @@ private String secretKey;
 
 @Value("${cloud.aws.region.static}")
 private String region;
-```
-
-### QueryDSL 설정
-
-```groovy
-// build.gradle
-
-buildscript {
-    ext {
-        queryDslVersion = "5.0.0"
-    }
-}
-
-dependencies {
-  implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-  implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-}
-
-//querydsl에서 사용할 경로를 선언
-def querydslDir = "$buildDir/generated/querydsl"
-
-
-//querydsl 설정을 추가합니다. JPA 사용 여부와 사용할 경로
-querydsl {
-    jpa = true
-    querydslSourcesDir = querydslDir
-}
-//build시 사용할 sourceSet
-sourceSets {
-    main.java.srcDir querydslDir
-}
-//querydsl이 compileClassPath를 상속하도록 설정
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-//querydsl 컴파일시 사용할 옵션을 설정
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
-}
-```
-
-```java
-package com.tutti.backend.config;
-
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-@Configuration
-public class QueryDslConfig {
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    @Bean
-    public JPAQueryFactory jpaQueryFactory() {
-        return new JPAQueryFactory(entityManager);
-    }
-}
 ```
