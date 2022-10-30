@@ -18,3 +18,7 @@ CQRS(Command and Query Responsibility Segregation). 시스템에서 명령을 �
 
 1. CQRS와 Kafka의 연관 관계는 무엇인가?
 2. redis와 Kafka의 차이점은 무엇인가?
+
+# 참고한 사이트
+
+[https://justhackem.wordpress.com/2016/09/17/what-is-cqrs/](https://justhackem.wordpress.com/2016/09/17/what-is-cqrs/)
