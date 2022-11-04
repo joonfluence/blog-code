@@ -27,7 +27,7 @@
 
 권한 부여까지 끝났다면 bin 디렉토리로 이동해, 터미널에 `./h2.sh`를 실행해줍니다. 사용자 디렉토리에 `test.mv.db` 파일이 생성됐는지 확인해줍니다.
 
-![H2_console](./h2_console.png)
+![H2_console](./images/h2_console.png)
 
 또 브라우저가 실행되면서 자동으로 입력된 IP 주소를 localhost로 변경해줍니다. 그러면 아래와 같이, H2 console 화면이 뜨게 됩니다. JDBC URL을 jdbc:h2:tcp://localhost/~/test로 입력해줍니다. 만약 h2 폴더의 경로가 다운로드 폴더 경로라면, 사용자 디렉토리(~)로 변경해줍니다.
 
@@ -39,7 +39,7 @@
 
 # 스프링 DB 접근 기술
 
-![JDBC_SQLMAPPER_ORM](./JDBC_SQLMAPPER_ORM.png)
+![JDBC_SQLMAPPER_ORM](./images/JDBC_SQLMAPPER_ORM.png)
 
 스프링 DB 접근 기술에는 크게 3가지가 있습니다. JDBC, SQLMAPPER, ORM. 언급된 순서가 빠를수록 오래된 기술이며, 시간의 흐름에 따라 각 기술의 단점을 보완하며 진화했기 때문에 기술이 탄생하게 된 배경을 이해하는 것이 중요합니다.
 
@@ -242,7 +242,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
 기존 Interface에서 구현체만 바꿔, 끼워주면 됩니다. 아래와 같이 말이죠.
 
-![JDBC_Interface](JDBC_Interface.png)
+![JDBC_Interface](./images/JDBC_Interface.png)
 
 ```java
 import org.springframework.context.annotation.Bean;
