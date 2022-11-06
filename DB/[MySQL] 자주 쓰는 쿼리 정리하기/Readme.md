@@ -1,5 +1,13 @@
 # 조회
 
+## DB 조회/생성/삭제
+
+```sql
+show databases; -- DB 목록 조회
+create database kurrant; -- 생성
+drop database kurrant; -- 삭제
+```
+
 ## 비밀번호 변경
 
 ```sql
