@@ -44,20 +44,25 @@ buildscript {
     }
 }
 
-dependencies {
-  implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-  implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+plugins {
+    id 'com.ewerk.gradle.plugins.querydsl' version "1.0.10"
+    ...
 }
 
 //querydsl에서 사용할 경로를 선언
 def querydslDir = "$buildDir/generated/querydsl"
 
+dependencies {
+  implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+  implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+}
 
 //querydsl 설정을 추가합니다. JPA 사용 여부와 사용할 경로
 querydsl {
     jpa = true
     querydslSourcesDir = querydslDir
 }
+
 //build시 사용할 sourceSet
 sourceSets {
     main.java.srcDir querydslDir
