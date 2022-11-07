@@ -29,10 +29,6 @@ SELECT * FROM Post WHERE title = #{title} AND createdAt = #{createdAt} AND autho
 
 QueryDSL은 쿼리를 문자가 아니라 자바 코드로 작성할 수 있게 돕는 도구입니다. 동적 쿼리 문제를 깔끔하게 해결할 뿐만 아니라, 문법 오류도 컴파일 시점에 모두 잡아줍니다. 자바 코드로 작성하짐나 SQL, JPQL과 문법이 거의 같기 때문에 쉽게 학습할 수 있고, 또 쉽게 복잡한 쿼리도 작성할 수 있습니다.
 
-### 해결 방법
-
-AAA
-
 ### 설정 방법
 
 ```groovy
@@ -76,6 +72,8 @@ compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 ```
+
+스프링 빈에도 등록해줍니다.
 
 ```java
 package com.tutti.backend.config;
