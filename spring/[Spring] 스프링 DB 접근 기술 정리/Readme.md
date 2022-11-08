@@ -46,6 +46,7 @@
 먼저, 세 기술의 공통점은 아래와 같습니다.
 
 - 공통점
+
   - 모두 Persistance(영속성)과 관련됩니다. 영속성이란 휘발성 메모리인 RAM에 저장하지 않고, 영구히 저장될 수 있는 Database 혹은 파일에 저장하는 방식을 말합니다. 여기선 DB에 해당하겠죠.
 
 ## 순수 JDBC (JDBC)
@@ -80,6 +81,22 @@ spring.datasource.username=sa
 이제 gradle에 종속성을 추가해주면 끝입니다. 잘 설치가 완료됐죠? 본격적으로 DB 연결을 위한 코드를 아래에서 작성해주겠습니다.
 
 ### 코드 작성
+
+아래와 같이, 유저 정보 조회와 저장을 담당하는 기능을 수행하도록 Interface를 미리 정의해주겠습니다.
+
+```java
+package [패키지명].repository;
+import [패키지명].domain.Member;
+import java.util.List;
+import java.util.Optional;
+
+public interface MemberRepository {
+    Member save(Member member);
+    Optional <Member> findById(Long id);
+    Optional <Member> findByName(String name);
+    List<Member> findAll();
+}
+```
 
 순수 JDBC로 DB 관리를 하는 코드들은 아래와 같습니다. Connection, PreparedStatement, ResultSet 등이 눈에 띄네요. 추후 학습해서 따로 해당 내용만 다뤄보도록 하겠습니다. 간략하게 보면,
 
@@ -240,7 +257,8 @@ public class JdbcMemberRepository implements MemberRepository {
 
 ### 설정방법
 
-기존 Interface에서 구현체만 바꿔, 끼워주면 됩니다. 아래와 같이 말이죠.
+JDBC 이전에는 메모리 상에서만 동작하도록 구현했다고 가정하겠습니다.
+그러면 기존 Interface에서 구현체만 바꿔, 끼워주면 됩니다. 아래와 같이 말이죠.
 
 ![JDBC_Interface](./images/JDBC_Interface.png)
 
@@ -309,7 +327,7 @@ public class SpringConfig {
 
 ## Spring JDBC (JDBC 템플릿) => SQL Mapper
 
-다음 다뤄볼 건 Spring JDBC 혹은 JDBC 템플릿라 불리는 기술입니다. SQL Mapper라고도 합니다. 이 기술은 DB 연결과 해제 작업을 대신 해주기 때문에, 작성해야 할 코드 수가 많이 줄어들게 됩니다. SQL Mapper란 SQL을 직접 작성하고 Object필드를 매핑하여 데이터를 객체화 하는 것을 말합니다.
+다음 다뤄볼 건 Spring JDBC 혹은 JDBC 템플릿이라 불리는 기술입니다. SQL Mapper라고도 합니다. 이 기술은 DB 연결과 해제 작업을 대신 해주기 때문에, 작성해야 할 코드 수가 많이 줄어들게 됩니다. SQL Mapper란 SQL을 직접 작성하고 Object 필드를 매핑하여 데이터를 객체화 하는 것을 말합니다.
 
 ### 코드작성
 
@@ -590,7 +608,7 @@ public class SpringConfig {
 
 - 장점
   - 스프링 데이터 JPA는 기본적인 CRUD 처리까지 해준다.
-  - findByName 같은 경우도 인터페이스 만으로 구현이 끝난다. 내부적으론 JPQL (select m from Member m where m.name = ?)과 같은 쿼리를 날린다.
+  - findByName 같은 경우도 인터페이스 만으로 구현이 끝난다. 내부적으론 JPQL에서 다음(select m from Member m where m.name = ?)과 같은 쿼리를 날린다.
 - 단점
   - 여전히 복잡한 쿼리는 직접 작성해줘야 합니다. (그 방법에 관해선 추후에 더 알아보겠습니다.)
 
