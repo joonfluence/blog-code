@@ -11,7 +11,7 @@
 3. 해당 버킷에 걸린 람다 이벤트 발생 
 4. 람다 함수가 이미지를 리사이징하고 타겟 폴더에 저장
 
-![image_resizing](image_resizing.png)
+![image_resizing](../../images/image_resizing.png)
 
 ### AWS Lambda 실행 설정
 

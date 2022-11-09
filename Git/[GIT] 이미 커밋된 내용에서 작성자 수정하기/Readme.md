@@ -1,6 +1,7 @@
 # 서론
 
 오늘은 회사 계정으로 잘못 커밋했을 때, 커밋 계정을 변경해 github 컨트리뷰션을 남기는 방법에 관해 알아보도록 하겠습니다. 
+추가로 커밋 시간을 변경하는 방법도 같이 알아보도록 하겠습니다. 
 
 # 본론
 
@@ -54,7 +55,13 @@ git commit --amend --author="사용자명 <이메일>"
 
 ![이미 커밋된 내용에서 작성자 수정하기](./%5BGIT%5D%20%EC%9D%B4%EB%AF%B8%20%EC%BB%A4%EB%B0%8B%EB%90%9C%20%EB%82%B4%EC%9A%A9%EC%97%90%EC%84%9C%20%EC%9E%91%EC%84%B1%EC%9E%90%20%EC%88%98%EC%A0%95%ED%95%98%EA%B8%B0.png)
 
+### 커밋 시간 변경방법
+
+```shell
+git commit --amend --no-edit --date "Fri 18 Feb 2022 01:35:10 KST"
+```
+
 # 참고한 사이트
 
 [https://jojoldu.tistory.com/120](https://jojoldu.tistory.com/120)
-
+[https://intrepidgeeks.com/tutorial/change-submission-time-git](https://intrepidgeeks.com/tutorial/change-submission-time-git)

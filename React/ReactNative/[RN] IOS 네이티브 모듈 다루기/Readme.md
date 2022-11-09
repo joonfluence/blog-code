@@ -7,7 +7,7 @@
 먼저, Xcode 상에서 새로운 Object-C 파일을 생성해줍시다. XCode 상, `File -> New -> File`로 접근할 수 있습니다.
 
 
-![New_File](./New_File.png)
+![New_File](../images/New_File.png)
 
 ### Object-C 모듈/메서드 내보내기
 
@@ -110,7 +110,7 @@ class CalendarManager: NSObject {
 브릿지 헤더의 이름은 아래와 같이, X-Code에서도 수정해줘야 합니다. `Target -> Built Settings -> Objective-C Bridging Header`로 접근할 수 있습니다. 
 
 
-![Swift-Header](./Swift-Header.png)
+![Swift-Header](../images/Swift-Header.png)
 
 저는 RN-Bridge-Manager란 이름으로 설정해줬습니다.
 
