@@ -4,6 +4,8 @@ Spring Boot를 이용해서 어플리케이션을 만들다 보면 외부에서 
 
 따라서 이렇게 중요한 값들을 `application.properties` 혹은 `application.yml` 과 같은 외부 설정값을 관리하는 파일에 적어두고 사용하기도 하고 .jar 파일을 실행하기 위한 커맨드에서 직접 값을 넘겨주기도 한다.
 
+# 본론
+
 ### 설정파일 값 가져오기
 
 아래 예시와 같이, application.yml에  설정해준다.
@@ -43,9 +45,67 @@ private String region;
 - Production 
 
 ```yml
-
+// application.yml 
+spring:
+  profiles:
+    active:
+      - prod
+    include:
+      - db
 ```
-spring.config.activate.on-profile: “prod”
 
-@ConfigurationProperties 클래스 작성 
-@ConfigurationProperties 테스트 
+위와 같이, active 상태로 둘 정보를 application.yml에 입력 해줘야 합니다. 설정이 복잡하므로 application-db.yml 이란 이름의 파일을 생성하고 해당 정보를 application.yml에서 불러오도록 하겠습니다. 이를 위해, include 속성을 추가해주면 됩니다. 
+
+```yml
+// application-db.yml
+# 공통설정
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
+---
+
+# 개발 DB 설정 
+
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+      
+  datasource:
+    url: jdbc:[주소]:3306/[DB명]?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull
+    username: OOO
+    password: OOO
+
+---
+
+# 상용 DB 설정 
+
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+  datasource:
+    url: jdbc:[주소]:3306/[DB명]?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull
+    username: OOO
+    password: OOO
+    hikari:
+      maxLifetime: 58000 # 58sec(서버 연결시간보다 짧게, 커넥션풀 타임아웃 3초)
+      connectionTimeout: 3000 # 3sec
+      maximumPoolSize: 10
+      data-source-properties: #https://2ssue.github.io/programming/HikariCP-MySQL/
+        useServerPrepStmts: false
+        rewriteBatchedStatements: true
+        connectionTimeout: 3000
+        socketTimeout: 60000
+        useSSL: false
+```
+
+그리고 설정 값으로 둘 요소들에 관해선 spring.config.activate.on-profile이란 속성 값에 값을 적어줍니다. 
+
+# 결론
+
+이상으로 짧게, 스프링 어플의 속성을 조절하는 방법에 관해서 알아보았습니다. 
