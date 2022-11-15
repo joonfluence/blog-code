@@ -1,19 +1,5 @@
 # 조회
 
-## DB 조회/생성/삭제
-
-```sql
-show databases; -- DB 목록 조회
-create database kurrant; -- 생성
-drop database kurrant; -- 삭제
-```
-
-## 비밀번호 변경
-
-```sql
-set PASSWORD FOR 'root'@'localhost' = PASSWORD("1234");
-```
-
 ## 기본
 
 - 전체 읽기 : SELECT \* from `테이블명` : 테이블의 전체 내용을 선택하여 데이터를 읽어옴.
@@ -87,7 +73,19 @@ order by h;
 3. INNER JOIN과 OUTER JOIN의 차이점은 무엇인가? The major difference between inner and outer joins is that **inner joins result in the intersection of two tables**, whereas outer joins result in the union of two tables.
 4. Left Join은 left 테이블의 값을 전부 가져온다. Right 테이블은 left 테이블과 일치하는 경우에만 가져온다.
 
+# 수정
+
+```sql
+UPDATE [테이블명] SET [컬럼명=바꿀 값] WHERE [조건]
+```
+
 # 생성
+
+### 데이터 생성
+
+```sql
+INSERT INTO [테이블명] ([칼럼1], [칼럼2], ...) VALUES ([값1], [값2], ...)
+```
 
 ### 테이블 칼럼 생성
 
@@ -112,14 +110,8 @@ Create Table CustomerProductList(
 );
 ```
 
-### Primary Key 설정
+# 삭제
 
 ```sql
-ALTER TABLE Persons ADD PRIMARY KEY (PKey);
-```
-
-### IF ~ ELSE 조건문
-
-```sql
-SELECT IF(조건문, '참일때 값', '거짓일 때 값') FROM 테이블명
+DELETE FROM 테이블명 WHERE PKey = ???;
 ```

@@ -1,5 +1,19 @@
 # 본문
 
+### DB 조회/생성/삭제
+
+```sql
+show databases; -- DB 목록 조회
+create database kurrant; -- 생성
+drop database kurrant; -- 삭제
+```
+
+### 비밀번호 변경
+
+```sql
+set PASSWORD FOR 'root'@'localhost' = PASSWORD("1234");
+```
+
 ### 칼럼 삭제하기
 
 ```sql
@@ -13,16 +27,16 @@ ALTER TABLE 테이블명 DROP FOREIGN KEY 칼럼명;
 ALTER TABLE 테이블명 MODIFY COLUMN 칼럼명 int(2) DEFAULT 0 NULL;
 ```
 
-### 테이블 날리기
+### Primary Key 설정
 
 ```sql
-DROP TABLE 테이블명;
+ALTER TABLE Persons ADD PRIMARY KEY (PKey);
 ```
 
-### 테이블 행 삭제하기
+### IF ~ ELSE 조건문
 
 ```sql
-DELETE FROM 테이블명 WHERE PKey = ???;
+SELECT IF(조건문, '참일때 값', '거짓일 때 값') FROM 테이블명
 ```
 
 # 참고한 사이트
