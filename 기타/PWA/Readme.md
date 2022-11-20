@@ -28,8 +28,8 @@
 ### 배포
 
 - 부분적으로 앱과 같은 방식으로 배포 가능하다.
-  - 구글 PlayStore에서 배포 가능하다.
-  - 앱 AppStore에선 배포 불가능하다.
+  - 웹은 물론, 구글/마이크로소프트/삼성의 AppSotre에서도 배포 가능하다.
+  - 애플의 AppStore에선 아직 배포 불가능하다.
 
 ### 유용한 툴들
 
@@ -40,25 +40,25 @@
 - [Maskable.app](https://maskable.app/)
   - 더 나은 사용성을 위한 어댑티브 아이콘을 디자인할 수 있는 툴.
 
-### 추가기능
+### (당신이 모를 수 있는) 추가기능
 
 - App Shortcut
   - manifest.json 파일에 shortcuts를 추가해주면 된다.
 - Contact Picker
-  - 연락처 정보를 통해, 앱 초대가 가능하다. 
-- GEOLOCATION 
-  - 유저의 현재 위치를 알 수 있다. 
+  - 연락처 정보를 통해, 앱 초대가 가능하다.
+- GEOLOCATION
+  - 유저의 현재 위치를 알 수 있다.
 - Device Motion
   - 유저 핸드폰 각도와 같은 정보들을 알 수 있다.
 - External Devices
-  - Bluetooth, NFC, USB, HID 등에 연결 가능하다. 
-- Idle Detection 
+  - Bluetooth, NFC, USB, HID 등에 연결 가능하다.
+- Idle Detection
   - 유저가 설치한 앱을 사용하고 있는지 파악 가능하다.
 - File System
   - 브라우저 제한이 있을 수 있음
 - Web Share & Web Share Target
-  - 
-
+- Web RTC
+  - 카메라 접근이 가능하다.
 
 ### PWA를 위한 4가지 스텝
 
