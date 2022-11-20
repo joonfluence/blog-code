@@ -1,6 +1,6 @@
-### PWA
+# 서론
 
-Progressvie Web App의 약자, 웹 코드를 바탕으로 앱을 만들 수 있는 방법.
+오늘은 웹 코드를 바탕으로 앱을 만들 수 있는 기술인 PWA(Progressvie Web App)에 관해서 알아보도록 하겠습니다.
 
 ### 장점
 
@@ -13,7 +13,8 @@ Progressvie Web App의 약자, 웹 코드를 바탕으로 앱을 만들 수 있�
 
 ### 단점 (제약사항)
 
-- 네이티브 앱에 비해 제약이 생길 수 있다.
+- 네이티브 앱에 비해, 기능상 제약이 존재한다.
+  - IOS Push Notification 기능이 안됨 (2022년 WWDC 발표에 따르면, 2023년 추가 예정)
 
 ### 기술 구성요소
 
@@ -39,6 +40,26 @@ Progressvie Web App의 약자, 웹 코드를 바탕으로 앱을 만들 수 있�
 - [Maskable.app](https://maskable.app/)
   - 더 나은 사용성을 위한 어댑티브 아이콘을 디자인할 수 있는 툴.
 
+### 추가기능
+
+- App Shortcut
+  - manifest.json 파일에 shortcuts를 추가해주면 된다.
+- Contact Picker
+  - 연락처 정보를 통해, 앱 초대가 가능하다. 
+- GEOLOCATION 
+  - 유저의 현재 위치를 알 수 있다. 
+- Device Motion
+  - 유저 핸드폰 각도와 같은 정보들을 알 수 있다.
+- External Devices
+  - Bluetooth, NFC, USB, HID 등에 연결 가능하다. 
+- Idle Detection 
+  - 유저가 설치한 앱을 사용하고 있는지 파악 가능하다.
+- File System
+  - 브라우저 제한이 있을 수 있음
+- Web Share & Web Share Target
+  - 
+
+
 ### PWA를 위한 4가지 스텝
 
 - 이미 만들어진 웹 어플리케이션이 있어야 한다.
@@ -51,5 +72,6 @@ Progressvie Web App의 약자, 웹 코드를 바탕으로 앱을 만들 수 있�
 # 참고한 사이트
 
 [드림코딩 앨리 - PWA편](https://www.youtube.com/watch?v=FEBkne7Nyu4&ab_channel=%EB%93%9C%EB%A6%BC%EC%BD%94%EB%94%A9)
+[PWA - 7 Web Features You Didn’t Know Existed](https://www.youtube.com/watch?v=ppwagkhrZJs&ab_channel=Fireship)
 [PWABuilder Github](https://github.com/pwa-builder/pwabuilder-web/blob/V2/src/assets/next-steps.md)
 [Web.dev](https://web.dev/install-criteria/)
