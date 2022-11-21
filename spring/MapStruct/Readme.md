@@ -4,6 +4,10 @@
 
 MapStruct란 Entity와 Dto간의 매핑을 지원하는 라이브러리를 말한다.
 
+### ModelMapper vs MapStruct
+
+ModelMapper는 리플렉션 기반으로 동작하여 실제 매핑 로직 동작을 쉽게 파악하기 어려우나, MapStruct는 코드 생성 방식으로 동작하기 때문에 생성된 코드를 통해 매핑 로직을 쉽게 파악할 수 있다. 또 컴파일 타임에 매핑 오류를 인지하고 설정에 따라 빌드 시 에러를 던질 수도 있다. 성능 측면에서도 MapStruct가 횔씬 더 좋다고 알려져 있다.
+
 ### Entity to DTO
 
 데이터 조회 API를 개발하는 경우를 생각해보자. 컨트롤러를 통해서 들어온 요청이 여러 비즈니스 로직과 데이터 접근 로직을 거치면서 여러 계층 간의 데이터 변경을 한 후에 최종적으로 응답을 반환한다.
@@ -24,7 +28,7 @@ MapStruct 라이브러리를 사용하면 어떻게 코드를 편리하게 변�
 
 ### 사용하는 이유
 
-Entity To DTO 작업을 쉽게 만들어준다.
+Entity To DTO 작업을 쉽게 만들어준다. 반대도 마찬가지이다. 
 
 ### 환경 설정
 
@@ -58,9 +62,7 @@ public interface GenericMapper<D, E> {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(D dto, @MappingTarget E entity);
 }
-```
 
-```java
 @Mappper(componentModel = "spring")
 public interface CodingRoomMapper extends GenericMapper<CodingRoomDto, CodingRoom>{
 
@@ -133,17 +135,18 @@ public class CodingRoomMapperImpl implements CodingRoomMapper {
 @Service
 @RequiredArgsConstructor
 public class CodingRoomService {
-  
+
   private final CodingRoomMapper codingRoomMapper;
   ...
-      
-  CodingRoomDto codingRoomDto =  codingRoomMapper.toDto(codingRoom);
-  ...        
+
+  CodingRoomDto codingRoomDto = codingRoomMapper.toDto(codingRoom);
+  ...
 }
 ```
 
-각 구현체를 받아와서 사용하면 된다. 
+각 구현체를 받아와서 사용하면 된다.
 
 # 참고한 사이트
 
 [Mapstruct-in-springboot](https://madplay.github.io/post/mapstruct-in-springboot)
+[](https://velog.io/@cham/Java-MapStruct-%EC%82%AC%EC%9A%A9%EB%B2%95)
