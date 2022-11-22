@@ -50,7 +50,7 @@ dependencies {
 
 ### 적용
 
-MapStruct를 사용하면, @Mapper 어노테이션을 통해 손쉽게 
+MapStruct를 사용하면, @Mapper 어노테이션을 통해 손쉽게 적용할 수 있습니다. 
 
 ```java
 // GenericMapper interface
@@ -65,12 +65,14 @@ public interface GenericMapper<D, E> {
 
 @Mappper(componentModel = "spring")
 public interface CodingRoomMapper extends GenericMapper<CodingRoomDto, CodingRoom>{
-
+    CodingRoomMapper INSTANCE = Mappers.getMapper(CodingRoomMapper.class);
 }
 ```
 
 - @Mapper : MapStruct Code Generator가 해당 인터페이스의 구현체를 생성해준다.
 - componentModel = "spring" : spring에 맞게 bean으로 등록해준다
+
+생성된 결과는 아래와 같다. 
 
 ```java
 // CodingRoomMapperImpl class
@@ -127,9 +129,10 @@ public class CodingRoomMapperImpl implements CodingRoomMapper {
 
         return codingRoom;
     }
-...
 }
 ```
+
+실제 코드 상에서 코딩할 때는 아래처럼 작성한다.
 
 ```java
 @Service
