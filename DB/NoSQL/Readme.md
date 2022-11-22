@@ -6,19 +6,59 @@
 - MongoDB
   - 설치하기
     - MongoDB
-    - 컴퍼스 
-    - 몽구스 
+    - 컴퍼스
+    - 몽구스
   - 데이터베이스 및 컬렉션 생성하기
   - CRUD 작업하기
-  - ODM 
-    - 몽구스 
+  - ODM
+    - 몽구스
 
-### 기본작업
+### 환경설정
 
-- 서버 시작 요청
-  mongod
-- 셸(자바스크립트 해석기) 시작
-  mongo
+```shell
+brew tap mongodb/brew
+brew install mongodb-community
+```
+
+mongodb 설치하기
+
+```shell
+brew services start mongodb-community
+brew services stop mongodb-community
+```
+
+mongodb 실행/중지하기
+
+서버 시작 요청
+
+```shell
+mongod
+```
+
+셸(자바스크립트 해석기) 시작
+
+```shell
+mongo
+use [데이터베이스명]
+```
+
+### CRUD 작업
+
+1. 조회하기
+
+- db.콜렉션명.find({})
+
+2. 생성하기
+
+- db.콜렉션명.save(객체)
+
+3. 수정하기
+
+- db.콜렉션명.update(객체)
+
+4. 삭제하기
+
+- db.콜렉션명.remove(객체)
 
 ### DB & 콜렉션 다루기
 

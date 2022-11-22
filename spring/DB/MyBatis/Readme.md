@@ -28,6 +28,7 @@ mysql -V
 
 ```
 mysql.server start
+brew services start mysql
 ```
 
 그리고 MySQL 초기 설정을 해줍니다. 비밀번호, 익명유저, root 접속 권한 등을 설정해줍니다.
