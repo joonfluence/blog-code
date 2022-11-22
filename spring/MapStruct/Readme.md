@@ -69,8 +69,8 @@ public interface CodingRoomMapper extends GenericMapper<CodingRoomDto, CodingRoo
 }
 ```
 
-- @Mapper : MapStruct Code Generator가 해당 인터페이스의 구현체를 생성해준다.
-- componentModel = "spring" : spring에 맞게 bean으로 등록해준다
+- @Mapper : MapStruct Code Generator가 해당 인터페이스의 구현체를 생성해준다. 
+- componentModel = "spring" : spring에 맞게 bean으로 등록해준다. 
 
 생성된 결과는 아래와 같다. 
 
@@ -152,4 +152,4 @@ public class CodingRoomService {
 # 참고한 사이트
 
 [Mapstruct-in-springboot](https://madplay.github.io/post/mapstruct-in-springboot)
-[](https://velog.io/@cham/Java-MapStruct-%EC%82%AC%EC%9A%A9%EB%B2%95)
+[Java-MapStruct](https://velog.io/@cham/Java-MapStruct-%EC%82%AC%EC%9A%A9%EB%B2%95)
