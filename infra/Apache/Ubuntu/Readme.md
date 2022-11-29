@@ -36,3 +36,9 @@ netstat -nlpt
 ```shell
 service cron status
 ```
+
+### pid 바탕으로 프로세스 조회하는 방법
+
+```shell
+ps -ef | grep 'Process Name'
+```
