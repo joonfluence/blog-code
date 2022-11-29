@@ -10,15 +10,6 @@
 systemctl status apache2.service
 ```
 
-ProxyRequests
-ProxyPreserveHost :::
-
-### Apache2 재실행
-
-```shell
-service apache2 restart
-```
-
 ### 네트워크 테스트 방법
 
 ```shell
