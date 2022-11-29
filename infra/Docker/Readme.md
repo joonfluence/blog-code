@@ -1,16 +1,24 @@
-### 목차
+# 목차
 
 - 도커
   - 정의
   - 관련 기술
     - 가상화
     - 컨테이너
+    - 이미지 
+    - Dockerfile
+  - 환경설정
+  - 관련 명령어 
+    - 도커 명령어 
+    - 컨테이너 명령어 
+    - 이미지 명령어 
 
-### 도커의 정의
+## 정의
 
 도커는 어플리케이션 패키징 툴 입니다. 플랫폼과 상관없이 구동 가능하도록 어플리케이션 코드, 환경설정, 의존성 등 앱을 구동하기 위한 정보들을 포괄하여 플랫폼과 상관없이 구동 가능하도록 돕습니다.
 또 컨테이너 기반의 가상화 플랫폼입니다. 부두에서 컨테이너를 옮기고 관리하는 직업인 docker에서 따 온 이름에 걸맞게 컨테이너를 잘 다룰 수 있게 도와 주는 도구라고 할 수 있지요.
 
+## 관련 기술
 ### 가상화란
 
 가상화란 *하나의 하드웨어를 여러 개의 가상 머신으로 분할해 효율적으로 사용할 수 있는 기술*을 말합니다. 분할된 가상 머신들은 각각 독립적인 환경으로 구동됩니다. 이 때, 베이스가 되는 기존의 환경을 `Host OS`, 가상 머신으로 분할된 각각의 환경을 `Guest OS`라고 부릅니다.
@@ -23,6 +31,7 @@
 
 Host OS를 갖고 있느냐 없느냐를 기준으로 구분 지을 수 있습니다. 컨테이너는 포함하지 않고 Host OS를 공유합니다.
 
+## 환경설정 
 ### Mac 설치 방법
 
 ```shell
@@ -84,6 +93,7 @@ apt-cache madison docker-ce
 
 라고 입력해줍니다.
 
+## 관련 명령어 
 ### 버전 확인
 
 ```shell
@@ -92,13 +102,13 @@ docker --version
 
 가장 단순하게는 버젼을 보시면 됩니다.
 
-### 명령어 확인하기
+## 명령어 확인하기
 
 ```shell
 docker
 ```
 
-### 도커 삭제하기
+## 도커 삭제하기
 
 ```shell
 sudo apt-get purge docker-ce
@@ -113,3 +123,6 @@ sudo apt-get purge docker-ce
 [https://velog.io/@markany/%EB%8F%84%EC%BB%A4%EC%97%90-%EB%8C%80%ED%95%9C-%EC%96%B4%EB%96%A4-%EA%B2%83-1.-%EB%8F%84%EC%BB%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80](https://velog.io/@markany/%EB%8F%84%EC%BB%A4%EC%97%90-%EB%8C%80%ED%95%9C-%EC%96%B4%EB%96%A4-%EA%B2%83-1.-%EB%8F%84%EC%BB%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80)
 [https://shanepark.tistory.com/237](https://shanepark.tistory.com/237)
 [https://www.bsidesoft.com/7820](https://www.bsidesoft.com/7820)
+[https://www.docker.com/resources/what-container/](https://www.docker.com/resources/what-container/)
+[https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html](https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html)
+[https://tecoble.techcourse.co.kr/post/2021-08-14-docker/]((https://tecoble.techcourse.co.kr/post/2021-08-14-docker/))
