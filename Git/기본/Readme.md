@@ -67,6 +67,16 @@ git rm -rf --cached .
 git add .
 ```
 
+### 프로젝트 불러오기 
+
+```shell
+# public repo
+git clone [repository경로]
+
+# private repo 
+git clone https://닉네임@github.com/dalicious-manager/[repository경로]
+```
+
 # 참고사이트
 
 [Git](http://git-scm.com/)
