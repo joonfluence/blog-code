@@ -108,7 +108,7 @@ docker --version
 docker
 ```
 
-## 도커 삭제하기
+### 도커 삭제하기
 
 ```shell
 sudo apt-get purge docker-ce
