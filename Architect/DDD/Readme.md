@@ -4,7 +4,7 @@
 - 구성
   - Ubiqutous Language
   - Model-Driven Design
-- What & Why
+- What & Why (전략적 설계)
   - 비즈니스 도메인
   - 도메인 복잡성 관리
   - 바운디드 컨텍스트 연동
@@ -12,7 +12,14 @@
     - MSA
     - 이벤트 주도 아키텍처
     - 데이터 메시
-- How
+- How (전술적 설계)
+  - 구성
+    - 트랜잭션 스크립트
+      - 시스템 작업을 간단하고 쉬운 절차지향 스크립트로 구성한다.
+      - 트랜잭션을 적용해서 작업이 성공하거나 실패하도록 보장한다.
+    - 액티브 레코드
+      - 비즈니스 로직이 단순하지만 복잡한 자료구조에서 작동하는 경우 해당 자료구조를 액티브 레코드로 구현할 수 있다.
+      - 간단한 CRUD 데이터 접근 방법을 제공하는 자료구조다.
   - 계층형 아키텍처
     - Layer 별 특징과 역할 파악하기
 
@@ -113,9 +120,9 @@
 
 ![도메인 주도 설계](./DDD.png)
 
-# 참고한 사이트 
+# 참고한 사이트
 
 [https://appleg1226.tistory.com/40?category=1008265](https://appleg1226.tistory.com/40?category=1008265)
 [https://appleg1226.tistory.com/41](https://appleg1226.tistory.com/41)
 [https://appleg1226.tistory.com/43?category=1008265](https://appleg1226.tistory.com/43?category=1008265)
-[https://appleg1226.tistory.com/44?category=1008265]((https://appleg1226.tistory.com/44?category=1008265))
+[https://appleg1226.tistory.com/44?category=1008265](<(https://appleg1226.tistory.com/44?category=1008265)>)
