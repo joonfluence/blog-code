@@ -1,36 +1,28 @@
-# 협업하기
+# 서론
+
+오늘은 GIT을 통해 버젼관리를 하는 방법에 관해, 여럿이서 작업하는 상황을 가정하고 설명하겠습니다.
 
 ### branch & merge
 
-git branch : 브랜치 확인함. 
+git branch : 브랜치 확인함.
 
-git branch 브랜치이름설정 : 새로운 브랜치를 생성함. 
+git branch 브랜치이름설정 : 새로운 브랜치를 생성함.
 
-git checkout 브랜치이름 : 생성한 브랜치로 이동함. 
+git checkout 브랜치이름 : 생성한 브랜치로 이동함.
 
-git add . : 모든 파일들을 추가함. 
+git add . : 모든 파일들을 추가함.
 
-git commit -m "commit message" : 커밋, 메세지 작성함. 
+git commit -m "commit message" : 커밋, 메세지 작성함.
 
-git push origin 브랜치이름 : origin 저장소의 새로운 브랜치에 푸시함. 
+git push origin 브랜치이름 : origin 저장소의 새로운 브랜치에 푸시함.
 
-git checkout master 
+git checkout master
 
-git merge 브랜치이름 
+git merge 브랜치이름
 
-### Pull Request란?
+### Pull Request
 
-Pull request를 하는 이유는 원본 레포지토리에 변경 사항을 적용하기 위함이다. 이는 관리자가 승인할 경우 원본 레포지토리에 내가 만든 코드가 commit, merge 되어 적용되므로 결국, merge되는 것은 똑같다. **결국 fork를 했느냐 안했느냐에 따라서 pull request를 하느냐, 마느냐가 결정되는 것이다.** 
-
-### 임시저장하기
-
-git stash : 모든 파일 임시저장
-
-git stash pop : 임시 저장 내용 복원
-
-git stash list : 모든 변겅점 목록을 보여줌
-
-git stash drop : 가장 최근에 저장한 임시 저장 내용 제거
+Pull request를 하는 이유는 원본 레포지토리에 변경 사항을 적용하기 위함입니다. 이는 관리자가 승인할 경우 원본 레포지토리에 내가 만든 코드가 commit, merge 되어 적용되므로 바로 커밋해서 반영하는 것과 똑같습니다.
 
 ### rebase와 merge의 공통점과 차이점은 무엇인가?
 
@@ -43,3 +35,6 @@ rebase도 병합되는 것은 마찬가지지만, 3 way merge 없이 feature 브
 ### 2 way merge와 3 way merge의 차이점은 무엇인가?
 
 base를 기준으로 값이 변경된 사람의 내역을 따르면 3 way merge이다. 2 way merge는 서로 다른 경우 base와 상관 없이 conflict가 뜬다.
+
+# 결론
+
