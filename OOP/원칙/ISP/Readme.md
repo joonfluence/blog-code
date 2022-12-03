@@ -9,35 +9,42 @@
 인터페이스 분리 원칙을 지킨다는 것은 어떤 구현체에 부가 기능이 필요하다면 이 인터페이스를 구현하는 다른 인터페이스를 만들어서 해결할 수 있다. 예를 들어 파일 읽기/쓰기 기능을 갖는 구현 클래스가 있는데 어떤 클라이언트는 읽기 작업 만을 필요로 한다면 별도의 읽기 인터페이스를 만들어 제공해주는 것입니다.
 
 ![ISP](./ISP.png)
---> 한줄 다이어그램 설명
 
 ```java
+
+public interface AuthChecker {
+	String login(String pw);
+	String join(String id, String pw);
+	String encryptPassword(String pw);
+	String isCorrectPassword(String rawPw, String pw);
+}
+
 @Component
 public class GoogleSnsLogin implements AuthChecker {
 
 	@Override
-	public String login(final String pw)  {
+	public String login(String pw)  {
 		...
 	}
 
   @Override
-	public String join(final String rawPw, final String pw) {
+	public String join(String id, String pw) {
 		...
 	}
 
   @Override
-	public String encryptPassword(final String pw)  {
+	public String encryptPassword(String pw)  {
 		...
 	}
 
   @Override
-	public String isCorrectPassword(final String rawPw, final String pw) {
+	public String isCorrectPassword(String rawPw, String pw) {
 		...
 	}
 }
 ```
 
-적용 전에는 Authchecker에서 모든 로직을 처리하는 구조였습니다. 하지만 ISP 원칙에 따라, Authchecker 인터페이스에 정의된 메서드들을 LoginService와 AuthChecker로 각각을 구분 짓고 역할을 분리하도록 하겠습니다. 
+적용 전에는 Authchecker에서 모든 로직을 처리하는 구조였습니다. 하지만 ISP 원칙에 따라, Authchecker 인터페이스에 정의된 메서드들을 LoginService와 AuthChecker로 각각을 구분 짓고 역할을 분리하도록 하겠습니다.
 
 ```java
 
@@ -73,8 +80,7 @@ public class GoogleSnsLogin implements LoginService, AuthChecker {
 
 	@Override
 	public String join(final String rawPw, final String pw) {
-		final String encryptedPw = login(rawPw);
-		return encryptedPw.equals(pw);
+		...
 	}
 
   ...
