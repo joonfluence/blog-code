@@ -150,6 +150,56 @@ DDD는 용어부터 우리가 알고 있는 것과 다르고 익숙해져야 할
 
 확실한 건 이 부분은 개발적인 부분보다도, 순수하게 비즈니스적인 비중이 더 많기 때문에 개발자만 참여하는 것이 아닌, 개발자와 실무(보통 기획자) 담당의 협업이 필요한 부분이다.
 
+### 코드에서 객체 정의하기
+
+이제 본격적으로 구현 단계다. 구현 요소는 아래와 같이, Entity, Aggregate, Repository, Value Object 총 4가지로 구성된다.
+
+- Value Object (값 객체)
+  - 역할
+    - 엔티티의 표현을 풍부하게 해주는 `내부 계산`, `설명` 등을 위한 보조 객체 
+  - 주의사항
+    - 불변 객체여야 한다. 그래서 setter나 내부 필드를 바꾸는 어떤 행위도 용납되지 않는다. 
+
+```cs
+class Person
+{
+    private PersonId     _id;
+    private Name         _name;
+    private PhoneNumber  _landline;
+    private PhoneNumber  _mobile;
+    private EmailAddress _email;
+    private Height       _height;
+    private CountryCode  _country;
+
+    public Person(...) { ... }
+}
+
+static void Main(string[] args)
+{
+    var dave = new Person(
+        id:       new PersonId(30217),
+        name:     new Name("Dave", "Ancelovici"),
+        landline: PhoneNumber.Parse("023745001"),
+        mobile:   PhoneNumber.Parse("0873712503"),
+        email:    Email.Parse("dave@learning-ddd.com"),
+        height:   Height.FromMetric(180),
+        country:  CountryCode.Parse("BG"));
+}
+```
+
+- Entity
+
+  - Value Object와의 차이점
+    - 엔티티의 식별 필드의 값은 엔티티 생애 주기 내내 불변이어야 한다는 점이다.
+  - 특성
+    - 개별성
+      - 다른 데이터들과 구별이 되어야 하는 데이터들의 묶음어어야 한다. 데이터베이스에서 Primary Key를 가지며, 그 키를 이용해서 무엇인가를 해야 한다면 Entity라고 보면 된다. 
+    - 변화가능성
+      - 내부적으로 상태가 자주 변화한다. 메서드를 통해 바꾸게 된다. 
+
+- Aggregate
+- Repository
+
 # 참고한 사이트
 
 [https://appleg1226.tistory.com/40?category=1008265](https://appleg1226.tistory.com/40?category=1008265)

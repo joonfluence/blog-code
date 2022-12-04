@@ -1,5 +1,3 @@
-
-
 # 참고한 사이트
 
 [https://martinfowler.com/bliki/BoundedContext.html](https://martinfowler.com/bliki/BoundedContext.html)
