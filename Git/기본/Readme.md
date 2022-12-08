@@ -39,6 +39,7 @@ Local Repository는 working directory, staging area, repository 이렇게 3개�
     - commit 간에 파일의 바뀐 내용을 보여줍니다.
   - -stat
     - 파일들의 변경 여부를 알려준다.
+  - [브랜치명] --oneline
 
 ### 버젼 수정하기
 
