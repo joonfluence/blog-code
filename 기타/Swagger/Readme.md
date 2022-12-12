@@ -8,7 +8,7 @@ Swagger란 개발자가 **REST 웹 서비스를 설계, 빌드, 테스트, 문�
 
 ### 설치방법
 
-```
+```groovy
 implementation "io.springfox:springfox-boot-starter:3.0.0"
 implementation "io.springfox:springfox-swagger-ui:3.0.0"
 ```
