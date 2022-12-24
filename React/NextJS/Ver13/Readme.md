@@ -10,6 +10,34 @@
   - loading.[js|ts] 파일에 적어줌.
 - 에러처리
   - error.[js|ts] 파일에 적어줌.
+- 미들웨어
+  - rewrite나 redirect를 사용할 필요 없이 직접 미들웨어에서 response를 제공할 수도 있게 되었다.
+  ```typescript
+  // middleware.ts
+  import { NextRequest, NextResponse } from 'next/server';
+  import { isAuthenticated } from '@lib/auth';
+
+  // Limit the middleware to paths starting with `/api/`
+  export const config = {
+    matcher: '/api/:function*',
+  };
+
+  export function middleware(request: NextRequest) {
+    // Call our authentication function to check the request
+    if (!isAuthenticated(request)) {
+      // Respond with JSON indicating an error message
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Auth failed',
+        },
+        {
+          status: 401,
+        },
+      );
+    }
+  }
+  ```
 
 # 참고한 사이트
 
