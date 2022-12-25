@@ -1,35 +1,5 @@
 # 본론
 
-## 기본개념
-
-### Spring 서버를 Github Action을 통해 CI/CD 하는 방법
-
-전에는 Jenkins + Buildkite
-
-CI/CD에서 가장 중요한 것은 `자동화`입니다. 오늘은 Github Action을 위한 CI/CD 자동화 방법에 관해서 알아보도록 하겠습니다.
-
-### Github Actions 정리하기
-
-1. Events
-
-main 브랜치로 머지하거나, **커밋을 푸쉬**하거나, 이슈를 누군가가 여는 등. 깃헙에서 일어날 수 있는 일에 대하여, 여러가지 이벤트들을 미리 지정해줄 수 있습니다.
-
-2. Workflows
-
-이벤트(예를 들면, 커밋 푸쉬)가 실행될 때, 수행되어야 할 일(Job)들의 목록을 말합니다. Workflow는 하나 혹은 다수의 job으로 구성됩니다. Job에는 Unit Test, E2E Test 등이 포함될 수 있습니다.
-
-3. Jobs
-
-어떤 순서대로 실행되어야 하는지, 실행되어야 하는 명령어들을 추가해줄 수 있습니다. 예를 들어, Job에는 유닛 테스트를 실행하거나 E2E 테스트를 실행하는 등의 명령이 포함될 수 있습니다.
-
-4. Actions
-
-재사용할 수 있는 Actions가 있습니다. 원하는 명령어를 실행할 수 있고, 이미 오픈소스로 공개된 actions를 불러와 사용할 수도 있습니다. 자동화하고자 하는 Job을 스크립트 형태로 저장할 수도 있습니다.
-
-5. Runners
-
-각각의 Job은 병렬적으로 실행되는데, 이를 실행하는 요소가 Runner 입니다. Runner는 Virtual Machine 혹은 Docker Container가 해당될 수 있습니다.
-
 ### 실제 적용하기
 
 1. 스프링 빌드 자동화
@@ -106,32 +76,50 @@ github의 actions에 들어가서 처리 할 것
   - Code Deploys는 Github에 올라간 파일들을 EC2에 전달하는 기능
 
     ```yaml
-    ame: logging-system
+    name: Deploy String boot to Amazon EC2
 
     on:
-      workflow_dispatch:
+      push:
+        branches:
+          - master
 
     env:
       S3_BUCKET_NAME: [버킷명]
       PROJECT_NAME: [프로젝트명]
+      APPICATION_NAME: [CodeDeploy 앱 명]
 
     jobs:
-      build:
+      deploy:
+        name: DEPLOY
         runs-on: ubuntu-latest
 
         steps:
-        # zip 파일을 압축한다.
-          - name: Make zip file
-            run: zip -r ./$GITHUB_SHA.zip .
+          - name: Checkout
+            uses: actions/checkout@v2
+
+          - name: Set up JDK 1.8
+            uses: actions/setup-java@v1
+            with:
+              java-version: 1.8
+
+          - name: Grant execute permission for gradlew
+            run: chmod +x gradlew
             shell: bash
 
+          - name: Build with Gradle
+            run: ./gradlew build -x test
+            shell: bash
+
+          - name: Make zip file
+            run: zip -qq -r ./$GITHUB_SHA.zip .
+            shell: bash
         # AWS credentials 사용한다.
           - name: Configure AWS credentials
             uses: aws-actions/configure-aws-credentials@v1
             with:
-              aws-access-key-id: ${{ secrets.ImageCodeDeployAccessKey }}
-              aws-secret-access-key: ${{ secrets.ImageCodeDeploySecretKey }}
-              aws-region: ${{ secrets.ImageCodeDeployRegion }}
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: ${{ secrets.AWS_REGION }}
 
         # jar 파일을 S3에 업로드한다.
           - name: Upload to S3
@@ -139,7 +127,7 @@ github의 actions에 들어가서 처리 할 것
 
         # Code Deploy로 자동 배포한다.
           - name: Code Deploy
-            run: aws deploy create-deployment --application-name logging-system-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+            run: aws deploy create-deployment --application-name $APPICATION_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
             working-directory: ./unanimous
     ```
 
