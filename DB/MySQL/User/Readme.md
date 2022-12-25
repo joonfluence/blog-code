@@ -1,3 +1,11 @@
+### 유저 생성
+
+```sql
+use mysql;
+select * from user;
+create user [이름]@[IP주소] identified by [비밀번호];
+```
+
 ### 테이블 사용자 권한 부여
 
 [https://computer-science-student.tistory.com/514](https://computer-science-student.tistory.com/514)
