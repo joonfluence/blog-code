@@ -34,7 +34,7 @@ main 브랜치로 머지하거나, **커밋을 푸쉬**하거나, 이슈를 누�
 
 1. 스프링 빌드 자동화
 
-```shell
+```yaml
 # .github/workflows/workflow.yml
 name: Java CI with Gradle
 
@@ -72,6 +72,19 @@ github의 actions에 들어가서 처리 할 것
 
 2. merge develop branch to master branch
 
+```yaml
+- name: Merge branch
+  # You may pin to the exact commit or the version.
+  # uses: devmasx/merge-branch@854d3ac71ed1e9deb668e0074781b81fdd6e771f
+  uses: devmasx/merge-branch@1.4.0
+  with:
+    type: now
+    # The branch name or hash to merge. default GITHUB_SHA
+    target_branch: master
+    # Github token
+    github_token: ${{ secrets.TOKEN }}
+```
+
 3. Deploy via S3 using AWS Code Deploy
 
 - IAM 유저 Code Deploy 권한 부여
@@ -92,7 +105,7 @@ github의 actions에 들어가서 처리 할 것
 
   - Code Deploys는 Github에 올라간 파일들을 EC2에 전달하는 기능
 
-    ```shell
+    ```yaml
     ame: logging-system
 
     on:
