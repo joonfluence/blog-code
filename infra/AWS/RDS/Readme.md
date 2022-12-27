@@ -15,3 +15,6 @@ aws rds generate-db-auth-token \
 ```
 mysql --host=hostName --port=portNumber --ssl-ca=full_path_to_ssl_certificate --enable-cleartext-plugin --user=userName --password=authToken
 ```
+
+# 참고한 사이트
+
