@@ -8,6 +8,20 @@ aws rds create-db-snapshot \
     --db-snapshot-identifier mydbsnapshot
 ```
 
+### AWS에서 RDS에 접속하는 방법
+
+- DB 클러스터에 연결
+
+```shell
+mysql --host=hostName --port=portNumber --ssl-ca=full_path_to_ssl_certificate --enable-cleartext-plugin --user=userName --password=authToken
+```
+
+- SSH Tunnel 사용하여 접근하는 방법
+
+```shell
+ssh -N -L 3306:[호스트명]:3306 [유져명]@[EC2_Public_DNS/IP_주소명]
+```
+
 ### AWS RDS에서 SnapShot을 어떻게 불러오지?
 
 ```
