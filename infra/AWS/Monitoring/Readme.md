@@ -8,7 +8,7 @@
 
 - EC2
 
-  - CloudWatch Metrics: You can use Amazon CloudWatch to monitor the performance metrics of your Amazon EC2 instances, including TPS. To do this, you'll need to configure your EC2 instances to send performance data to CloudWatch. You can then use the CloudWatch console or API to view the TPS metrics.
+  - **CloudWatch Metrics**: You can use **Amazon CloudWatch** to monitor the performance metrics of your Amazon EC2 instances, including TPS. To do this, you'll need to configure your EC2 instances to send performance data to CloudWatch. You can then use the CloudWatch console or API to view the TPS metrics.
   - Application Load Balancer (ALB) Access Logs: If you are using an Application Load Balancer (ALB), you can enable access logs, which provide detailed information about each request processed by the load balancer. You can use the log data to calculate TPS by counting the number of requests per second.
   - Custom Metrics: If you want to monitor TPS for a specific application or service, you can instrument your code to emit TPS metrics to CloudWatch. You can use CloudWatch APIs or libraries provided by AWS to send custom metrics to CloudWatch.
   - Third-Party Monitoring Tools: There are several third-party monitoring tools available that can be used to monitor TPS and other performance metrics in AWS. Some popular options include New Relic, Datadog, and AppDynamics.
