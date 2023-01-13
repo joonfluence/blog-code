@@ -97,19 +97,20 @@ nginx 를 설치하면 /etc/nginx 에 아래와 같은 디렉토리가 나올 �
 └── win-utf
 ```
 
+관련된 설정 파일을 열어보면 아래와 같습니다. 
+
 ```shell
 # worker 프로세스를 실행할 사용자 설정
 # - 이 사용자에 따라 권한이 달라질 수 있다.
 user  nginx;
 # 실행할 worker 프로세스 설정
 # - 서버에 장착되어 있는 코어 수 만큼 할당하는 것이 보통, 더 높게도 설정 가능
-worker_processes  1;
+worker_processes auto;
 
 # 오류 로그를 남길 파일 경로 지정
 error_log  /var/log/nginx/error.log warn;
 # NGINX 마스터 프로세스 ID 를 저장할 파일 경로 지정
 pid        /var/run/nginx.pid;
-
 
 # 접속 처리에 관한 설정을 한다.
 events {
@@ -119,33 +120,94 @@ events {
 
 # 웹, 프록시 관련 서버 설정
 http {
-    # mime.types 파일을 읽어들인다.
-    include       /etc/nginx/mime.types;
-    # MIME 타입 설정
-    default_type  application/octet-stream;
+  # mime.types 파일을 읽어들인다.
+  include       /etc/nginx/mime.types;
+  # MIME 타입 설정
+  default_type  application/octet-stream;
 
-    # 엑세스 로그 형식 지정
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
+  # 엑세스 로그 형식 지정
+  log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
 
-    # 엑세스 로그를 남길 파일 경로 지정
-    access_log  /var/log/nginx/access.log  main;
+  # 엑세스 로그를 남길 파일 경로 지정
+  access_log  /var/log/nginx/access.log  main;
 
-    # sendfile api 를 사용할지 말지 결정
-    sendfile        on;
-    #tcp_nopush     on;
+  # sendfile api 를 사용할지 말지 결정
+  sendfile        on;
+  #tcp_nopush     on;
 
-    # 접속시 커넥션을 몇 초동안 유지할지에 대한 설정
-    keepalive_timeout  65;
+  # 접속시 커넥션을 몇 초동안 유지할지에 대한 설정
+  keepalive_timeout  65;
 
-    # (추가) nginx 버전을 숨길 수 있다. (보통 아래를 사용해서 숨기는게 일반적)
-    server_tokens off
+  # (추가) nginx 버전을 숨길 수 있다. (보통 아래를 사용해서 숨기는게 일반적)
+  server_tokens off
 
-    #gzip  on;
+  #gzip  on;
 
-    # /etc/nginx/conf.d 디렉토리 아래 있는 .conf 파일을 모두 읽어 들임
-    include /etc/nginx/conf.d/*.conf;
+  # /etc/nginx/conf.d 디렉토리 아래 있는 .conf 파일을 모두 읽어 들임
+  include /etc/nginx/conf.d/*.conf;
+  server {
+      listen       80;
+      listen       [::]:80;
+      server_name  _;
+      root         /usr/share/nginx/html;
+
+      # Load configuration files for the default server block.
+      include /etc/nginx/default.d/*.conf;
+
+	location / {
+ 	if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PATCH, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization';
+            add_header 'Access-Control-Max-Age' 86400;
+            return 204;
+        }
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Content-Type' 'application/json' always;
+        proxy_pass http://localhost:3000/;
+	}
+
+	error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+    }
+    server {
+    listen 80;
+    listen [::]:80;
+    server_name [도메인명];
+    root [서버 루트 디렉토리];
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php-fpm/www.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
 }
 ```
 
