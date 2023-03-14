@@ -14,6 +14,7 @@
 
 ```shell
 sudo growpart /dev/xvda 1
+lsblk # 확인
 ```
 
 3. ex4 파일 시스템 확장
@@ -21,6 +22,12 @@ sudo growpart /dev/xvda 1
 ```shell
 sudo resize2fs /dev/xvda1 # ubuntu
 sudo xfs_growfs /dev/xvda # centOs
+```
+
+4. 용량 증설 여부 확인
+
+```shell
+df -hT
 ```
 
 # 참고한 사이트
