@@ -148,3 +148,4 @@ export default function App() {
 ### 참고한 사이트
 
 [https://docs.expo.dev/push-notifications/push-notifications-setup/](https://docs.expo.dev/push-notifications/push-notifications-setup/)
+[https://docs.expo.dev/versions/latest/sdk/notifications/](https://docs.expo.dev/versions/latest/sdk/notifications/)
