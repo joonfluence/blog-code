@@ -1,212 +1,188 @@
+## 서론
+
+롬복의 @Builder 어노테이션과 빌더패턴에 대해 알아보도록 하겠습니다.
+
 # 본론
 
-### 정의
+### 개요
 
-생성과 관련된 디자인 패턴으로, 동일한 프로세스를 거쳐 다양한 구성의 인스턴스를 만드는 방법 중 하나이다.
-빌더 패턴은 복잡한 객체를 생성하는 클래스와 표현하는 클래스를 분리하여, 동일한 절차에서도 서로 다른 표현을 생성하는 방법을 제공한다.
-생성해야 하는 객체가 Optional한 속성을 많이 가질 때 더 좋다.
+빌더 패턴은 객체를 생성할 때 사용하는 디자인 패턴 중 하나로, 동일한 프로세스를 거쳐 다양한 구성의 인스턴스를 만드는 방법 중 하나입니다. 
+객체를 생성하는 클래스와 표한하는 클래스를 분리하여, 동일한 절차에서도 서로 다른 표현을 생성하는 방법을 제공합니다. 
 
-### 사용하는 이유
+### 빌더 패턴을 사용하는 이유
 
-객체를 생성하는 디자인 패턴 중 가장 효과적이기 떄문임.
+> Builder 패턴은 "복잡한 객체의 구성과 표현을 분리하여 동일한 구성 프로세스가 여러 개의 서로 다른 표현을 생성할 수 있도록" 하는 것을 목표로 합니다. - Gang of Four design patterns
 
-- 점층적 생성자 패턴
+제가 느낀 장점은 한 마디로 객체를 생성할 때, 빠진 값이 없도록 생성하도록 돕는다는 것 입니다. 객체를 생성하는 디자인 패턴 중 가장 효과적이기 때문에, 사용합니다. 
 
-  - 단점
+- 장점 
+	- 편리함 : 필수 인자만을 생성자에 전부 전달하여 객체를 만듭니다. 생성해야 하는 객체가 Optional한 속성을 많이 가질수록 더 좋습니다. 
+    - 가독성 : 선택 인자는 가독성이 좋은 코드로 인자를 넘길 수 있습니다. 
+    - 불변 객체 : setter가 없으므로 객체 일관성을 유지하여 불변 객체로 생성할 수 있습니다. 
 
-    - Optional한 인자에 따라 새로운 생성자를 만들거나, Null 값으로 채워야하는 문제가 발생된다.
+### 구현 방법
 
-      ```java
-      /**
-      * 기본 생성자 (필수)
-      */
-      public TourPlan() {
-      }
+```java
+package org.example;
 
-      /**
-      * 일반적인 여행 계획 생성자
-      *
-      * @param title 여행 제목
-      * @param startDate 출발 일
-      * @param nights n박
-      * @param days m일
-      * @param whereToStay 머물 장소
-      * @param plans n일차 할 일
-      */
-      public TourPlan(String title, LocalDate startDate, int nights, int days,
-          String whereToStay, List<DetailPlan> plans) {
-          this.title = title;
-          this.nights = nights;
-          this.days = days;
-          this.startDate = startDate;
-          this.whereToStay = whereToStay;
-          this.plans = plans;
-      }
+public interface PostBuilder {
+    PostBuilder title(String title);
+    PostBuilder content(String content);
+    PostBuilder author(String author);
+    Post build();
+}
+```
 
-      /**
-      * 당일치기 여행 계획 생성자
-      *
-      * @param title 여행 제목
-      * @param startDate 출발 일
-      * @param plans 1일차 할 일
-      */
-      public TourPlan(String title, LocalDate startDate, List<DetailPlan> plans) {
-          this.title = title;
-          this.startDate = startDate;
-          this.plans = plans;
-      }
-      ```
+먼저, 인터페이스를 만들어보겠습니다.
 
-    - Lombok의 @AllArgsConstructor 에너테이션을 활용하면 코드가 길어지는 문제는 해결할 수 있지만, 여전히 많은 경우 타입과 순서로 발생할 수 있는 에러 가능성이 존재한다.
+```java
+package org.example;
 
-      ```java
-      // 순서를 파악이 어렵고, 가독성이 떨어진다.
-      new TourPlan("여행 계획", LocalDate.of(2021,12, 24), 3, 4, "호텔",
-          Collections.singletonList(new DetailPlan(1, "체크인")));
-
-      // 생성자를 만들지 않고 당일치기 객체를 생성하면 불필요한 Null을 채워야한다.
-      new TourPlan("여행 계획", LocalDate.of(2021,12, 24), null, null, null,
-          Collections.singletonList(new DetailPlan(1, "놀고 돌아오기")));
-      ```
-
-- 자바 빈 패턴
-
-  - (앞선 패턴에 비했을 때의) 장점
-    - 가독성이 나아진다.
-    - 순서에 상관 없어, 에러 발생 가능성이 줄어든다.
-  - 단점
-    - 함수 호출이 인자만큼 이루어지고, 객체 호출 한번에 생성할 수 없다.
-    - immutable 객체를 생성할 수 없다.
-      - 쓰레드간 공유 가능한 객체 일관성(consistency)이 일시적으로 꺠질 수 있다.
-
-  ```java
-  TourPlan tourPlan = new TourPlan();
-  tourPlan.setTitle("칸쿤 여행");
-  tourPlan.setNights(2);
-  tourPlan.setDays(3);
-  tourPlan.setStartDate(LocalDate.of(2021, 12, 24));
-  tourPlan.setWhereToStay("리조트");
-  tourPlan.addPlan(1, "체크인 이후 짐풀기");
-  tourPlan.addPlan(1, "저녁 식사");
-  tourPlan.addPlan(2, "조식 부페에서 식사");
-  tourPlan.addPlan(2, "해변가 산책");
-  tourPlan.addPlan(2, "점심은 수영장 근처 음식점에서 먹기");
-  tourPlan.addPlan(2, "리조트 수영장에서 놀기");
-  tourPlan.addPlan(2, "저녁은 BBQ 식당에서 스테이크");
-  tourPlan.addPlan(3, "조식 부페에서 식사");
-  tourPlan.addPlan(3, "체크아웃");
-  ```
-
-- 빌더 패턴
-
-  - 장점
-    - 필요한 객체를 직접 생성하는 대신, 먼저 필수 인자들을 생성자에 전부 전달하여 빌더 객체를 만든다.
-    - 그리고 선택 인자는 가독성이 좋은 코드로 인자를 넘길 수 있다.
-    - setter가 없으므로 객체 일관성을 유지하여 불변 객체로 생성할 수 있다.
-
-  ```java
-  public interface TourPlanBuilder {
-    TourPlanBuilder nightsAndDays(int nights, int days);
-    TourPlanBuilder title(String title);
-    TourPlanBuilder startDate(LocalDate localDate);
-    TourPlanBuilder whereToStay(String whereToStay);
-    TourPlanBuilder addPlan(int day, String plan);
-    TourPlan getPlan();
-  }
-  ```
-
-  이를 구현하는 ConcreteBuilder는 다음과 같다.
-
-  ```java
-  public class DefaultTourBuilder implements TourPlanBuilder {
+public class Post implements PostBuilder{
     private String title;
-    private int nights;
-    private int days;
-    private LocalDate startDate;
-    private String whereToStay;
-    private List<DetailPlan> plans;
+    private String content;
+    private String author;
 
-    @Override
-    public TourPlanBuilder nightsAndDays(int nights, int days) {
-        this.nights = nights;
-        this.days = days;
-        return this;
+    public Post(){}
+
+    static Post builder(){
+        return new Post();
     }
 
     @Override
-    public TourPlanBuilder title(String title) {
+    public PostBuilder title(String title) {
         this.title = title;
         return this;
     }
 
     @Override
-    public TourPlanBuilder startDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public PostBuilder content(String content) {
+        this.content = content;
         return this;
     }
 
     @Override
-    public TourPlanBuilder whereToStay(String whereToStay) {
-        this.whereToStay = whereToStay;
+    public PostBuilder author(String author) {
+        this.author = author;
         return this;
     }
 
-    @Override
-    public TourPlanBuilder addPlan(int day, String plan) {
-        if (this.plans == null) {
-            this.plans = new ArrayList<>();
-        }
-
-        this.plans.add(new DetailPlan(day, plan));
+    public Post build(){
         return this;
     }
 
-    @Override
-    public TourPlan getPlan() {
-        return new TourPlan(title, startDate, days, nights, whereToStay, plans);
-    }
-  }
-  ```
-
-  이제 TourPlan 객체를 생성하는 코드를 살펴보자.
-
-  ```java
-  return tourPlanBuilder.title("칸쿤 여행")
-        .nightsAndDays(2, 3)
-        .startDate(LocalDate.of(2020, 12, 9))
-        .whereToStay("리조트")
-        .addPlan(0, "체크인하고 짐 풀기")
-        .addPlan(0, "저녁 식사")
-        .getPlan();
-  ```
-
-  Director를 적용하면 클라이언트 코드가 더 짧아질 수 있다.
-
-  ```java
-  public class TourDirector {
-    private TourPlanBuilder tourPlanBuilder;
-
-    public TourDirector(TourPlanBuilder tourPlanBuilder) {
-        this.tourPlanBuilder = tourPlanBuilder;
+    public String getTitle(){
+        return this.title;
     }
 
-    public TourPlan cancunTrip() {
-        return tourPlanBuilder.title("칸쿤 여행")
-                .nightsAndDays(2, 3)
-                .startDate(LocalDate.of(2020, 12, 9))
-                .whereToStay("리조트")
-                .addPlan(0, "체크인하고 짐 풀기")
-                .addPlan(0, "저녁 식사")
-                .getPlan();
+    public String getContent(){
+        return this.content;
     }
 
-    public TourPlan longBeachTrip() {
-        return tourPlanBuilder.title("롱비치")
-                .startDate(LocalDate.of(2021, 7, 15))
-                .getPlan();
+    public String getAuthor(){
+        return this.author;
     }
-  }
-  ```
+}
+```
+
+빌더패턴은 위와 같이 구현할 수 있고, 아래와 같이 사용할 수 있습니다. 
+
+```java
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+        String title = "빌더패턴에 대해서 알아보자.";
+        String content = "오늘은 빌더패턴에 대해서 알아보겠습니다.";
+        String author = "이준호";
+        Post post = Post.builder().title(title).content(content).author(author).build();
+        System.out.println(post.getTitle()); // 빌더패턴에 대해서 알아보자.
+        System.out.println(post.getAuthor()); // 오늘은 빌더패턴에 대해서 알아보겠습니다.
+        System.out.println(post.getContent()); // joonfluence
+    }
+}
+```
+
+### 그 외 객체 생성 디자인 패턴
+
+- 점층적 생성자 패턴
+    - 단점
+    	- 생성자의 인자에 넣는 순서를 잘못 넣을 경우, 에러가 날 가능성이 존재합니다. 
+        - Optional한 인자가 있을 경우, null 값을 넣어줘야 합니다. 
+
+```java
+public PostBuilder(String title, String content, String author){
+    this.title = title;
+    this.content = content;
+    this.author = author;
+}
+```
+
+점층적 생성자 패턴를 활용하면, 아래와 같이 객체를 생성할 수 있습니다. 
+
+```java
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+        DefaultPostBuilder post = new DefaultPostBuilder(
+        	"빌더패턴에 대해서 알아보자.", // title
+        	"오늘은 빌더패턴에 대해서 알아보겠습니다.", // content
+            "joonfluence" // author
+        );
+        System.out.println(post.getTitle()); // 빌더패턴에 대해서 알아보자.
+        System.out.println(post.getAuthor()); // 오늘은 빌더패턴에 대해서 알아보겠습니다.
+        System.out.println(post.getContent()); // joonfluence
+    }
+}
+```
+
+- 자바 빈 패턴 
+	- 장점
+    	- 점층적 생성자 패턴보다 가독성이 낫습니다.
+        - 순서에 상관 없이, 에러 발생 가능성이 줄어듭니다. 
+    - 단점
+    	- 함수 호출이 인자만큼 이뤄지고, 객체 호출 한번에 생성할 수 없습니다.
+		- 불변 객체를 생성할 수 없습니다. 
+
+```java
+public Post {
+    public void setTitle(String title){
+        this.title = title;
+    }
+    public void setContent(String content){
+        this.content = content;
+    }
+    public void setAuthor(String author){
+        this.author = author;
+    }
+}
+```
+
+위와 같이, 생성자를 선언하면 아래와 같이 사용할 수 있습니다.
+
+```java
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+        String title = "빌더패턴에 대해서 알아보자.";
+        String content = "오늘은 빌더패턴에 대해서 알아보겠습니다.";
+        String author = "이준호";
+		Post postSetter = new Post();
+        postSetter.setTitle(title);
+        postSetter.setContent(content);
+        postSetter.setAuthor(author);
+        System.out.println(postSetter.getTitle());
+        System.out.println(postSetter.getAuthor());
+        System.out.println(postSetter.getContent());
+    }
+}
+```
+
+### 결론
+
+이상으로 다양한 객체 생성 방법에 대해서 알아보았습니다.
 
 # 참고한 사이트
 
