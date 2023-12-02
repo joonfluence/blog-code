@@ -13,8 +13,6 @@ implementation "io.springfox:springfox-boot-starter:3.0.0"
 implementation "io.springfox:springfox-swagger-ui:3.0.0"
 ```
 
-![Swagger_ui](./swagger-ui.png)
-
 ### Swagger 설정 Bean 등록하기
 
 SwaggerConfig.java 파일을 추가하고 이를 Spring Bean으로 등록해준다. 참고로 @Configuration은 설정파일을 만들기 위한 애노테이션 or Bean을 등록하기 위한 애노테이션이다.
@@ -72,6 +70,11 @@ public class BasicController {
 3.x : http://localhost:8080/swagger-ui/index.html
 2.x : http://localhost:8080/swagger-ui.html
 
-# 참고한 사이트
+### Spring Boot 3.0 이상 버젼에서는? 
 
-[https://castleone.tistory.com/2](https://castleone.tistory.com/2)
+Spring Boot 3 부터는 별도의 설정 없이, 아래 의존성만 추가해주면 자동으로 설정이 완료된다. 
+V3과 같이, swagger-ui/index.html에서 확인 가능하다.
+
+```groovy
+implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+```
